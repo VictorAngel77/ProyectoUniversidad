@@ -29,17 +29,6 @@ public class Conexion {
             System.out.println(ex.getMessage());
         }
     }
-
-    public void Consultar(String query) {
-        try {
-            Conectar();
-            st = conn.prepareStatement(query);
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        } finally {
-            Desconectar();
-        }
-    }
     
     public void Desconectar() {
         try {

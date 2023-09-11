@@ -18,10 +18,10 @@ import java.util.logging.Logger;
 public class Conexion {
     private Connection conn=null;
     private Statement st;
-
+/*
     public Conexion() {
     }
-    
+    */
     
     public Connection getConnection() {
         try {

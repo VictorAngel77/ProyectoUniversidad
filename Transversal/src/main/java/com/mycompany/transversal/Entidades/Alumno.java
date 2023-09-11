@@ -18,6 +18,14 @@ public class Alumno {
     private boolean activo;
     private int Dni;
 
+    public Alumno(String apellido, String nombre, LocalDate fechaNAc, boolean activo, int Dni) {
+        this.apellido = apellido;
+        this.nombre = nombre;
+        this.fechaNAc = fechaNAc;
+        this.activo = activo;
+        this.Dni = Dni;
+    }
+
     public Alumno(int idAlumno, String apellido, String nombre, LocalDate fechaNAc, boolean activo, int Dni) {
         this.idAlumno = idAlumno;
         this.apellido = apellido;

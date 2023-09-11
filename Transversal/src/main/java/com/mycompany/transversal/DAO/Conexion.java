@@ -16,18 +16,23 @@ import java.util.logging.Logger;
  * @author cisco
  */
 public class Conexion {
-    static Connection conn;
-    static Statement st;
+    private Connection conn=null;
+    private Statement st;
+
+    public Conexion() {
+    }
     
-    public void Conectar() {
+    
+    public Connection getConnection() {
         try {
             conn = DriverManager.getConnection(
             "jdbc:mariadb://localhost/universidad",
             "estudiante",
          "estudiante");   
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        return conn;
     }
     
     public void Desconectar() {

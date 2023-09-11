@@ -16,13 +16,19 @@ public class Alumno {
     private String nombre;
     private LocalDate fechaNAc;
     private boolean activo;
+    private int Dni;
 
-    public Alumno(int idAlumno, String apellido, String nombre, LocalDate fechaNAc, boolean activo) {
+    public Alumno(int idAlumno, String apellido, String nombre, LocalDate fechaNAc, boolean activo, int Dni) {
         this.idAlumno = idAlumno;
         this.apellido = apellido;
         this.nombre = nombre;
         this.fechaNAc = fechaNAc;
         this.activo = activo;
+        this.Dni = Dni;
+    }
+
+    public Alumno() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getIdAlumno() {
@@ -65,10 +71,13 @@ public class Alumno {
         this.activo = activo;
     }
 
-    @Override
-    public String toString() {
-        return "Alumno{" + ", apellido=" + apellido + ", nombre=" + nombre + ", fechaNAc=" + fechaNAc + ", activo=" + activo + '}';
+    public int getDni() {
+        return Dni;
     }
-    
+
+    public void setDni(int Dni) {
+        this.Dni = Dni;
+    }
+
     
 }

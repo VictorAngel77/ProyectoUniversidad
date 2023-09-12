@@ -49,7 +49,7 @@ public class MateriaConexion {
 
     }
 
-    public Materia buscarMAteria(int id) {
+    public Materia buscarMateria(int id) {
 
         Materia materia = null;
         String sql = "SELECT nombre , año , estado FROM materia WHERE idMatria = ? AND estado = 1";
@@ -60,16 +60,15 @@ public class MateriaConexion {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 materia = new Materia();
-                materia.setIdMateria(rs.getInt("idMateria"));
-                materia.setNombre("nombre");
-                materia.setAño(rs.getInt("dni"));
-                materia.setEstado(true);
+                materia.setIdMateria(id);
+                materia.setNombre(rs.getString("nombre"));
+                materia.setEstado(rs.getBoolean("estado"));
             } else {
-                JOptionPane.showMessageDialog(null, "No existe el alumno");
+                throw new IllegalArgumentException("No existe la materia con ID: " + id);
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
+            ex.printStackTrace();
         }
         return materia;
     }

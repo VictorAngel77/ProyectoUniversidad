@@ -112,9 +112,34 @@ public class InscripcionDAO {
             Integer idMateria = rs.getInt("idMateria");
             String nombre = rs.getString("nombre");
             Integer año = rs.getInt("año");
-            Materia materia = new Materia();
-            materia.setAño(año);
-            materia.setNombre(nombre);
+            boolean estado = rs.getBoolean("estado");
+            Materia materia = new Materia(nombre, año, estado);
+            materia.setIdMateria(idMateria);
+            lista.add(materia);
+        }
+        ps.close();
+        con.close();
+        return lista;
+    }
+        
+    public List<Materia> fetchMateriasNoCursadas(int id) throws SQLException {
+        List<Materia> lista = new ArrayList<Materia>();
+        if (con == null) {
+            con = new Conexion().getConnection();
+        }
+        ps = con.prepareStatement(
+                "select materia.idMateria, nombre, año"
+                        + "from inscripcion join materia "
+                        + "on inscripcion.idMateria = materia.idMateria "
+                        + "where idAlumno != ?;");
+        ps.setInt(1, id);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Integer idMateria = rs.getInt("idMateria");
+            String nombre = rs.getString("nombre");
+            Integer año = rs.getInt("año");
+            boolean estado = rs.getBoolean("estado");
+            Materia materia = new Materia(nombre, año, estado);
             materia.setIdMateria(idMateria);
             lista.add(materia);
         }
@@ -140,9 +165,36 @@ public class InscripcionDAO {
             ps.setDouble(1,nota);
             ps.setInt(2,idAlumno);
             ps.setInt(3,idMateria);
-            ps.executeUpdate(); }
+            ps.executeUpdate(); 
         }catch(SQLException ex)  {System.out.println("Error" + ex);}
         }
-    
+        
+    public List<Alumno> fetchAlumnosByMateria(int id) throws SQLException {
+        List<Alumno> lista = new ArrayList<Alumno>();
+        if (con == null) {
+            con = new Conexion().getConnection();
+        }
+        ps = con.prepareStatement(
+                "select alumno.idAlumno, nombre, apellido, dni"
+                        + "from inscripcion join alumno "
+                        + "on inscripcion.idAlumno = alumno.idAlumno"
+                        + "where idMateria = ?;");
+        ps.setInt(1, id);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Alumno alumno = new Alumno();
+            String nombre = rs.getString("nombre"),
+                   apellido = rs.getString("apellido");
+            int dni = rs.getInt("dni");
+            alumno.setNombre(nombre);
+            alumno.setApellido(apellido);
+            alumno.setDni(dni);
+            
+            lista.add(alumno);
+        }
+        ps.close();
+        con.close();
+        return lista;
+    }
     
 }

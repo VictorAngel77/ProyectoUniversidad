@@ -122,6 +122,27 @@ public class InscripcionDAO {
         con.close();
         return lista;
     }
+        
+        public void borrarInscripcionMateriaAlumno(int materia, int alumno) {
+         try    {   
+           String SQL = "DELETE FROM `inscripcion` WHERE alumno.idAlumno =? and materia.idMateria =?";
+           ps = con.prepareStatement(SQL);
+           ps.setInt(1,alumno);
+           ps.setInt(2,materia); 
+           ps.executeUpdate();
+         } catch(SQLException ex)  {System.out.println("Error" + ex);}
+       }
+       
+        public void actualizarNota(int idAlumno, int idMateria, double nota)    {
+            try {
+            String SQL = "UPDATE `inscripcion` SET `nota`=? WHERE alumno.idAlumno =? and materia.idMateria =?";
+            ps = con.prepareStatement(SQL);
+            ps.setDouble(1,nota);
+            ps.setInt(2,idAlumno);
+            ps.setInt(3,idMateria);
+            ps.executeUpdate(); }
+        }catch(SQLException ex)  {System.out.println("Error" + ex);}
+        }
     
     
 }

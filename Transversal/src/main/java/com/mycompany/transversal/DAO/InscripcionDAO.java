@@ -102,19 +102,21 @@ public class InscripcionDAO {
             con = new Conexion().getConnection();
         }
         ps = con.prepareStatement(
-                "select materia.idMateria, nombre, año, nota, estado"
+                "select materia.idMateria, nombre, año"
                         + "from inscripcion join materia "
                         + "on inscripcion.idMateria = materia.idMateria "
                         + "where idAlumno = ?;");
         ps.setInt(1, id);
         rs = ps.executeQuery();
         while (rs.next()) {
-            Integer idMateria = rs.getInt("idMateria"),
-                    año = rs.getInt("año");
+            Integer idMateria = rs.getInt("idMateria");
             String nombre = rs.getString("nombre");
-            double nota = rs.getDouble("nota");
-            boolean estado = rs.getBoolean("estado");
-            lista.add(new Materia(nombre, año, estado));
+            Integer año = rs.getInt("año");
+            Materia materia = new Materia();
+            materia.setAño(año);
+            materia.setNombre(nombre);
+            materia.setIdMateria(idMateria);
+            lista.add(materia);
         }
         ps.close();
         con.close();

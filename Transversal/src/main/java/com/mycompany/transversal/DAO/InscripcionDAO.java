@@ -62,7 +62,7 @@ public class InscripcionDAO {
         while (rs.next()) {
             Integer idInscripcion = rs.getInt("idInscripcion");
             Alumno alumno = aluData.buscarAlumno(rs.getInt("idAlumno"));
-            Materia materia = materiaData.buscarMAteria(rs.getInt("idMateria"));
+            Materia materia = materiaData.buscarMateria(rs.getInt("idMateria"));
             Double nota = rs.getDouble("nota");
             lista.add(new Inscripcion(idInscripcion, alumno, materia, nota));
         }
@@ -82,7 +82,7 @@ public class InscripcionDAO {
         while (rs.next()) {
             Integer idInscripcion = rs.getInt("idInscripcion");
             Alumno alumno = aluData.buscarAlumno(rs.getInt("idAlumno"));
-            Materia materia = materiaData.buscarMAteria(rs.getInt("idMateria"));
+            Materia materia = materiaData.buscarMateria(rs.getInt("idMateria"));
             Double nota = rs.getDouble("nota");
             lista.add(new Inscripcion(idInscripcion, alumno, materia, nota));
         }

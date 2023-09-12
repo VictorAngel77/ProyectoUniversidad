@@ -25,8 +25,9 @@ public class InscripcionDAO {
     private Connection con = null;
     private PreparedStatement ps = null;
     private Statement st = null;
-    MateriaConexion materiaData;
-    AlumnoConexion aluData;
+    private ResultSet rs = null;
+    private MateriaConexion materiaData;
+    private AlumnoConexion aluData;
 
     public InscripcionDAO() {
     }
@@ -51,7 +52,7 @@ public class InscripcionDAO {
             System.out.println(ex.getMessage());
         }
     }
-    public List<Inscripcion> getInscripciones() throws SQLException {
+    public List<Inscripcion> fetchInscripciones() throws SQLException {
         List<Inscripcion> lista = new ArrayList<Inscripcion>();
         if (con == null) {
             con = new Conexion().getConnection();
@@ -66,6 +67,56 @@ public class InscripcionDAO {
             lista.add(new Inscripcion(idInscripcion, alumno, materia, nota));
         }
         st.close();
+        con.close();
+        return lista;
+    }
+    
+    public List<Inscripcion> fetchInscripcionesByIdAlumno(int id) throws SQLException {
+        List<Inscripcion> lista = new ArrayList<Inscripcion>();
+        if (con == null) {
+            con = new Conexion().getConnection();
+        }
+        ps = con.prepareStatement("select * from inscripcion where idAlumno = ?");
+        ps.setInt(1, id);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Integer idInscripcion = rs.getInt("idInscripcion");
+            Alumno alumno = aluData.buscarAlumno(rs.getInt("idAlumno"));
+            Materia materia = materiaData.buscarMAteria(rs.getInt("idMateria"));
+            Double nota = rs.getDouble("nota");
+            lista.add(new Inscripcion(idInscripcion, alumno, materia, nota));
+        }
+        st.close();
+        con.close();
+        return lista;
+    }
+        /**
+         * 
+         * @param id del alumno
+         * @return
+         * @throws SQLException 
+         */
+        public List<Materia> fetchMateriasCursadas(int id) throws SQLException {
+        List<Materia> lista = new ArrayList<Materia>();
+        if (con == null) {
+            con = new Conexion().getConnection();
+        }
+        ps = con.prepareStatement(
+                "select materia.idMateria, nombre, año, nota, estado"
+                        + "from inscripcion join materia "
+                        + "on inscripcion.idMateria = materia.idMateria "
+                        + "where idAlumno = ?;");
+        ps.setInt(1, id);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Integer idMateria = rs.getInt("idMateria"),
+                    año = rs.getInt("año");
+            String nombre = rs.getString("nombre");
+            double nota = rs.getDouble("nota");
+            boolean estado = rs.getBoolean("estado");
+            lista.add(new Materia(nombre, año, estado));
+        }
+        ps.close();
         con.close();
         return lista;
     }

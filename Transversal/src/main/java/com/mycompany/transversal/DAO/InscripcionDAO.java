@@ -27,7 +27,7 @@ public class InscripcionDAO {
     private Statement st = null;
     private ResultSet rs = null;
     private MateriaConexion materiaData;
-    private AlumnoConexion aluData;
+    private AlumnoConexion aluData = new AlumnoConexion(new Conexion());
 
     public InscripcionDAO() {
     }

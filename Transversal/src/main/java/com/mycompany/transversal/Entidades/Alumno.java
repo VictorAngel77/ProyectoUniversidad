@@ -36,7 +36,6 @@ public class Alumno {
     }
 
     public Alumno() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public int getIdAlumno() {

@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -58,7 +60,7 @@ public class MateriaConexion {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 materia = new Materia();
-                materia.setIdMateria("idMateria");
+                materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre("nombre");
                 materia.setAño(rs.getInt("dni"));
                 materia.setEstado(true);
@@ -70,6 +72,69 @@ public class MateriaConexion {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
         }
         return materia;
+    }
+    
+        public void modificarMateria(Materia materia) {
+        String sql = "UPDATE materia SET nombre = ? , año = ? WHERE idMateria = ?";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, materia.getNombre());
+            ps.setInt(2, materia.getAño());
+            int exito = ps.executeUpdate();
+            if (exito == 1) {
+                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El matria no existe");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia " + ex.getMessage());
+        }
+    }
+        
+        public void eliminarMateria(int id) {
+        try {
+            String sql = "UPDATE materia SET estado = 0 WHERE idMateria = ? ";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                int fila = ps.executeUpdate();
+                if (fila == 1) {
+                    JOptionPane.showMessageDialog(null, " Se eliminó la Materia.");
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Matria");
+        }
+    } 
+        
+        public Map<Boolean ,List<Materia>> listarMaterias() {
+        Map<Boolean ,List<Materia>> materiaSeparadas = new HashMap<>(){};
+        List<Materia> materiasVerdaderas = new ArrayList<>();
+        List<Materia> materiasFalsas = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM matria ";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    
+                    Materia materia = new Materia();
+                    materia.setNombre("nombre");
+                    materia.setAño(rs.getInt("año"));
+                    materia.setEstado(rs.getBoolean("estado"));
+                    
+                    if(materia.isEstado()){
+                    materiasVerdaderas.add(materia);
+                    }else{
+                    materiasFalsas.add(materia);
+                    }
+                }
+                materiaSeparadas.put(true, materiasVerdaderas);
+                materiaSeparadas.put(false, materiasFalsas);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno " + ex.getMessage());
+        }
+        return materiaSeparadas;
     }
 
 }

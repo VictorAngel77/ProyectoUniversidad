@@ -52,7 +52,7 @@ public class MateriaConexion {
     public Materia buscarMateria(int id) {
 
         Materia materia = null;
-        String sql = "SELECT nombre , año , estado FROM materia WHERE idMatria = ? AND estado = 1";
+        String sql = "SELECT nombre , año , estado FROM materia WHERE idMateria = ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -80,6 +80,7 @@ public class MateriaConexion {
             ps = con.prepareStatement(sql);
             ps.setString(1, materia.getNombre());
             ps.setInt(2, materia.getAño());
+            ps.setInt(3, materia.getIdMateria());
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
@@ -111,13 +112,13 @@ public class MateriaConexion {
         List<Materia> materiasVerdaderas = new ArrayList<>();
         List<Materia> materiasFalsas = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM matria ";
+            String sql = "SELECT * FROM materia ";
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     
                     Materia materia = new Materia();
-                    materia.setNombre("nombre");
+                    materia.setNombre(rs.getString("nombre"));
                     materia.setAño(rs.getInt("año"));
                     materia.setEstado(rs.getBoolean("estado"));
                     

@@ -24,7 +24,24 @@ public class Transversal {
         Conexion con = new Conexion();
 //        AlumnoConexion adao = new AlumnoConexion(con);
 //        MateriaConexion mdao = new MateriaConexion(con);
-//        Materia materia = mdao.buscarMAteria(1);
+//        Materia materia = mdao.buscarMateria(1);
 //        System.out.println(materia.getNombre());
+
+
+            MateriaConexion mdao = new MateriaConexion(con);
+            Materia materia = mdao.buscarMateria(1);
+            
+//            materia.setAño(2);
+//            materia.setNombre("Matematica");
+//            
+//            
+//            
+//            mdao.modificarMateria(materia);
+//            
+//            System.out.println(mdao.buscarMateria(1));
+            
+//            mdao.eliminarMateria(3);
+            
+            System.out.println(mdao.listarMaterias());
     }
 }

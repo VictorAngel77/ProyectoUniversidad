@@ -27,8 +27,8 @@ public class Conexion {
         try {
             conn = DriverManager.getConnection(
             "jdbc:mariadb://localhost/universidad",
-            "estudiante",
-         "estudiante");   
+            "root",
+         "");   
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }

@@ -1,3 +1,8 @@
-com\mycompany\transversal\DAO\Conexion.class
-com\mycompany\transversal\Entidades\Alumno.class
+com\mycompany\transversal\DAO\AlumnoConexion.class
+com\mycompany\transversal\Entidades\Inscripcion.class
 com\mycompany\transversal\Transversal.class
+com\mycompany\transversal\Entidades\Alumno.class
+com\mycompany\transversal\DAO\InscripcionDAO.class
+com\mycompany\transversal\DAO\MateriaConexion$1.class
+com\mycompany\transversal\DAO\MateriaConexion.class
+com\mycompany\transversal\DAO\Conexion.class

@@ -86,5 +86,10 @@ public class Alumno {
         this.Dni = Dni;
     }
 
+    @Override
+    public String toString() {
+        return "Alumno: " + "idAlumno: " + idAlumno + ", Apellido: " + apellido + ", Nombre: " + nombre + ", Fecha de nacimineto: " + fechaNAc +  ", DNI: " + Dni + ", Estado: " + activo;
+    }
+
     
 }

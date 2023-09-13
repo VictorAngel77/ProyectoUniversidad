@@ -23,10 +23,8 @@ public class Transversal {
     public static void main(String[] args) throws SQLException {
         Conexion con = new Conexion();
 //        AlumnoConexion adao = new AlumnoConexion(con);
-//        Alumno alumno = adao.buscarAlumno(3);
-//        System.out.println(alumno.getApellido());
-        MateriaConexion mdao = new MateriaConexion(con);
-        Materia materia = mdao.buscarMAteria(1);
-        System.out.println(materia.getNombre());
+//        MateriaConexion mdao = new MateriaConexion(con);
+//        Materia materia = mdao.buscarMAteria(1);
+//        System.out.println(materia.getNombre());
     }
 }

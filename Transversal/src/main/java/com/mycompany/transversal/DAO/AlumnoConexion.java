@@ -2,6 +2,7 @@ package com.mycompany.transversal.DAO;
 
 import com.mycompany.transversal.Entidades.Alumno;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,17 +36,17 @@ public class AlumnoConexion {
                 ps.setInt(1, alumno.getDni());
                 ps.setString(2, alumno.getApellido());
                 ps.setString(3, alumno.getNombre());
-                ps.setDate(4, java.sql.Date.valueOf(alumno.getFechaNAc()));
+                ps.setDate(4, Date.valueOf(alumno.getFechaNAc()));
                 ps.setBoolean(5, alumno.isActivo()); // if reducido
                 ps.executeUpdate();
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    alumno.setIdAlumno(rs.getInt("idAlumno"));
+                    alumno.setIdAlumno(rs.getInt(1));
                     JOptionPane.showMessageDialog(null, "Alumno añadido con exito.");
                 }
                 ps.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno" + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno" + ex.getMessage() + "\nSQLState: " + ex.getSQLState());
             }
 
         } catch (SQLException ex) {
@@ -54,7 +55,7 @@ public class AlumnoConexion {
     }
 
     
-    public Alumno buscarAlumno(int id) throws SQLException {
+    public Alumno buscarAlumno(int id)  {
         Alumno alumno = null;
         String sql = "SELECT dni, apellido, nombre, fechaNacimiento FROM alumno WHERE idAlumno = ? AND estado = 1";
         PreparedStatement ps = null;

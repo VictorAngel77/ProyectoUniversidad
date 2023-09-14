@@ -9,10 +9,11 @@ import com.mycompany.transversal.DAO.Conexion;
 import com.mycompany.transversal.DAO.InscripcionDAO;
 import com.mycompany.transversal.DAO.MateriaConexion;
 import com.mycompany.transversal.Entidades.Alumno;
+import com.mycompany.transversal.Entidades.Inscripcion;
 import com.mycompany.transversal.Entidades.Materia;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
+
 
 /**
  *
@@ -21,27 +22,15 @@ import java.util.logging.Logger;
 public class Transversal {
 
     public static void main(String[] args) throws SQLException {
-        Conexion con = new Conexion();
+//        Conexion con = new Conexion();
 //        AlumnoConexion adao = new AlumnoConexion(con);
 //        MateriaConexion mdao = new MateriaConexion(con);
 //        Materia materia = mdao.buscarMateria(1);
 //        System.out.println(materia.getNombre());
-
-
-            MateriaConexion mdao = new MateriaConexion(con);
-            Materia materia = mdao.buscarMateria(1);
-            
-//            materia.setAño(2);
-//            materia.setNombre("Matematica");
-//            
-//            
-//            
-//            mdao.modificarMateria(materia);
-//            
-//            System.out.println(mdao.buscarMateria(1));
-            
-//            mdao.eliminarMateria(3);
-            
-            System.out.println(mdao.listarMaterias());
+        List<Alumno> alum = new InscripcionDAO().fetchAlumnosByMateria(1);
+        
+        alum.forEach( alu -> 
+                System.out.println(alu.getApellido())
+        );
     }
 }

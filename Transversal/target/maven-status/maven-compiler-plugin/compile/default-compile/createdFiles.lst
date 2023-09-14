@@ -3,9 +3,10 @@ com\mycompany\transversal\Entidades\Inscripcion.class
 com\mycompany\transversal\Transversal.class
 com\mycompany\transversal\Vistas\Vista$1.class
 com\mycompany\transversal\Vistas\Vista.class
-com\mycompany\transversal\Vistas\Vista$2.class
-com\mycompany\transversal\Entidades\Alumno.class
-com\mycompany\transversal\DAO\InscripcionDAO.class
+com\mycompany\transversal\Vistas\Materia\NuevaMateria.class
 com\mycompany\transversal\DAO\MateriaConexion$1.class
 com\mycompany\transversal\DAO\MateriaConexion.class
 com\mycompany\transversal\DAO\Conexion.class
+com\mycompany\transversal\Vistas\Vista$2.class
+com\mycompany\transversal\Entidades\Alumno.class
+com\mycompany\transversal\DAO\InscripcionDAO.class

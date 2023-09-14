@@ -6,6 +6,7 @@ package com.mycompany.transversal.Vistas;
 
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.mycompany.transversal.Vistas.Materia.NuevaMateria;
 
 /**
  *
@@ -34,7 +35,7 @@ public class Vista extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         jLayeredPane3 = new javax.swing.JLayeredPane();
-        jLayeredPane1 = new javax.swing.JLayeredPane();
+        VistaMaterias = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
         jtBuscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -106,31 +107,31 @@ public class Vista extends javax.swing.JFrame {
 
         jButton3.setText("Modificar");
 
-        jLayeredPane1.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jtBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jComboBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jtBuscar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jComboBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jSeparator1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        VistaMaterias.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
-        jLayeredPane1.setLayout(jLayeredPane1Layout);
-        jLayeredPane1Layout.setHorizontalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+        javax.swing.GroupLayout VistaMateriasLayout = new javax.swing.GroupLayout(VistaMaterias);
+        VistaMaterias.setLayout(VistaMateriasLayout);
+        VistaMateriasLayout.setHorizontalGroup(
+            VistaMateriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VistaMateriasLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPane1Layout.createSequentialGroup()
+                .addGroup(VistaMateriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, VistaMateriasLayout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(138, 138, 138)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1)
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGroup(VistaMateriasLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,11 +142,11 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(jSeparator1))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
-        jLayeredPane1Layout.setVerticalGroup(
-            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jLayeredPane1Layout.createSequentialGroup()
+        VistaMateriasLayout.setVerticalGroup(
+            VistaMateriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VistaMateriasLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(VistaMateriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
@@ -155,14 +156,14 @@ public class Vista extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(VistaMateriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Materias", jLayeredPane1);
+        jTabbedPane1.addTab("Materias", VistaMaterias);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -191,6 +192,17 @@ public class Vista extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        NuevaMateria la_wea = new NuevaMateria();
+        la_wea.setLocation(0,0);
+        la_wea.setVisible(true);
+        la_wea.setSize(VistaMaterias.getWidth(), VistaMaterias.getHeight());
+        
+        VistaMaterias.removeAll();
+        
+        VistaMaterias.add(la_wea);
+        
+        
+        VistaMaterias.repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -229,13 +241,13 @@ public class Vista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane VistaMaterias;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JPanel jPanel1;

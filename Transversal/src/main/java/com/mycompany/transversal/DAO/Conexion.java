@@ -15,15 +15,10 @@ import java.util.logging.Logger;
  *
  * @author cisco
  */
-public class Conexion {
-    private Connection conn=null;
-    private Statement st;
-/*
-    public Conexion() {
-    }
-    */
+public  class Conexion {
+    private static Connection conn;
     
-    public Connection getConnection() {
+    public static Connection getConnection() {
         try {
             conn = DriverManager.getConnection(
             "jdbc:mariadb://localhost/universidad",
@@ -33,15 +28,6 @@ public class Conexion {
             System.out.println(ex.getMessage());
         }
         return conn;
-    }
-    
-    public void Desconectar() {
-        try {
-            conn.close();
-            st.close();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }
 

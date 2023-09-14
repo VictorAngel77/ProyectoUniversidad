@@ -27,10 +27,10 @@ public class Transversal {
 //        MateriaConexion mdao = new MateriaConexion(con);
 //        Materia materia = mdao.buscarMateria(1);
 //        System.out.println(materia.getNombre());
-        List<Alumno> alum = new InscripcionDAO().fetchAlumnosByMateria(1);
+       /* List<Alumno> alum = new InscripcionDAO().fetchAlumnosByMateria(1);
         
         alum.forEach( alu -> 
                 System.out.println(alu.getApellido())
-        );
+        );*/
     }
 }

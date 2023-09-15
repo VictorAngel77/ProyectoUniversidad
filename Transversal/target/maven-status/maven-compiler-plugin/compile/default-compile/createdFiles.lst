@@ -10,6 +10,7 @@ com\mycompany\transversal\DAO\MateriaConexion.class
 com\mycompany\transversal\DAO\Conexion.class
 com\mycompany\transversal\Vistas\Materia\MateriaView.class
 com\mycompany\transversal\Vistas\Vista$4.class
+com\mycompany\transversal\Vistas\Materia\NuevaMateria$1.class
 com\mycompany\transversal\Vistas\Vista$3.class
 com\mycompany\transversal\Vistas\Vista$5.class
 com\mycompany\transversal\Vistas\Vista$2.class

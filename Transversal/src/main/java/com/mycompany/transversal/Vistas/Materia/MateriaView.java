@@ -31,7 +31,7 @@ public class MateriaView extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        JbBaja = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jtBuscar = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -65,12 +65,12 @@ public class MateriaView extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton2.setText("Baja");
-        jButton2.setMaximumSize(new java.awt.Dimension(65, 32));
-        jButton2.setMinimumSize(new java.awt.Dimension(65, 32));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        JbBaja.setText("Baja");
+        JbBaja.setMaximumSize(new java.awt.Dimension(65, 32));
+        JbBaja.setMinimumSize(new java.awt.Dimension(65, 32));
+        JbBaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                JbBajaActionPerformed(evt);
             }
         });
 
@@ -103,7 +103,7 @@ public class MateriaView extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JbBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(144, 144, 144)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))
@@ -143,7 +143,7 @@ public class MateriaView extends javax.swing.JPanel {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JbBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
@@ -162,18 +162,32 @@ public class MateriaView extends javax.swing.JPanel {
         repaint();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void JbBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbBajaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        BajaView baja = new BajaView();
+        baja.setLocation(0, 0);
+        baja.setSize(700 , 400);
+        
+        removeAll();
+        add(baja);
+        repaint();
+    }//GEN-LAST:event_JbBajaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        ModificarView mod = new ModificarView();
+        mod.setLocation(0, 0);
+        mod.setSize(700,400);
+        
+        removeAll();
+        add(mod);
+        repaint();
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JbBaja;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;

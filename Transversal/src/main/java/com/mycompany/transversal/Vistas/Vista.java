@@ -35,7 +35,7 @@ public class Vista extends javax.swing.JFrame {
         FlatMacDarkLaf.setup();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jLayeredPane2 = new javax.swing.JLayeredPane();
+        VistaAlumnos = new javax.swing.JLayeredPane();
         jLayeredPane3 = new javax.swing.JLayeredPane();
         VistaMaterias = new javax.swing.JLayeredPane();
 
@@ -49,9 +49,9 @@ public class Vista extends javax.swing.JFrame {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTabbedPane1AncestorAdded(evt);
             }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -60,21 +60,21 @@ public class Vista extends javax.swing.JFrame {
             }
         });
 
-        jLayeredPane2.setMaximumSize(new java.awt.Dimension(700, 430));
-        jLayeredPane2.setPreferredSize(new java.awt.Dimension(700, 430));
+        VistaAlumnos.setMaximumSize(new java.awt.Dimension(700, 430));
+        VistaAlumnos.setPreferredSize(new java.awt.Dimension(700, 430));
 
-        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
-        jLayeredPane2.setLayout(jLayeredPane2Layout);
-        jLayeredPane2Layout.setHorizontalGroup(
-            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout VistaAlumnosLayout = new javax.swing.GroupLayout(VistaAlumnos);
+        VistaAlumnos.setLayout(VistaAlumnosLayout);
+        VistaAlumnosLayout.setHorizontalGroup(
+            VistaAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 698, Short.MAX_VALUE)
         );
-        jLayeredPane2Layout.setVerticalGroup(
-            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        VistaAlumnosLayout.setVerticalGroup(
+            VistaAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 404, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Alumnos", jLayeredPane2);
+        jTabbedPane1.addTab("Alumnos", VistaAlumnos);
 
         jLayeredPane3.setMaximumSize(new java.awt.Dimension(700, 430));
         jLayeredPane3.setPreferredSize(new java.awt.Dimension(700, 430));
@@ -94,14 +94,13 @@ public class Vista extends javax.swing.JFrame {
 
         VistaMaterias.setMaximumSize(new java.awt.Dimension(700, 400));
         VistaMaterias.setMinimumSize(new java.awt.Dimension(700, 400));
-        VistaMaterias.setPreferredSize(new java.awt.Dimension(700, 400));
         VistaMaterias.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 VistaMateriasAncestorAdded(evt);
             }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         VistaMaterias.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -156,6 +155,13 @@ public class Vista extends javax.swing.JFrame {
 
     private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded
         // TODO add your handling code here:
+        AlumnoView alumno = new AlumnoView();
+        alumno.setLocation(0,0);
+        alumno.setSize(700,400);
+        VistaAlumnos.removeAll();
+        VistaAlumnos.add(alumno);
+        VistaAlumnos.revalidate();
+        VistaAlumnos.repaint();
 
     }//GEN-LAST:event_jTabbedPane1AncestorAdded
 
@@ -212,8 +218,8 @@ public class Vista extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLayeredPane VistaAlumnos;
     private javax.swing.JLayeredPane VistaMaterias;
-    private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;

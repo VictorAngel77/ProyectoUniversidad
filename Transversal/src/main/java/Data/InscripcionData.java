@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.transversal.DAO;
+package Data;
 
 import com.mycompany.transversal.Entidades.Inscripcion;
 import java.sql.Connection;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author cisco
  */
-public class InscripcionDAO {
+public class InscripcionData {
 
     private Conexion con = new Conexion();
     private Connection conn = con.getConnection();
@@ -29,7 +29,7 @@ public class InscripcionDAO {
     private MateriaConexion materiaData = new MateriaConexion(con);
     private AlumnoConexion aluData = new AlumnoConexion(con);
 
-    public InscripcionDAO() {
+    public InscripcionData() {
     }
 
     public void saveInscripcion(Inscripcion insc) {

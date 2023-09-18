@@ -1,4 +1,4 @@
-package com.mycompany.transversal.DAO;
+package Data;
 
 import com.mycompany.transversal.Entidades.Alumno;
 import java.sql.Connection;

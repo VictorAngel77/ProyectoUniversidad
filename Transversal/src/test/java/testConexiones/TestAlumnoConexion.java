@@ -1,7 +1,7 @@
 package testConexiones;
 
-import com.mycompany.transversal.DAO.AlumnoConexion;
-import com.mycompany.transversal.DAO.Conexion;
+import Data.AlumnoConexion;
+import Data.Conexion;
 import com.mycompany.transversal.Entidades.Alumno;
 import java.time.LocalDate;
 import java.util.ArrayList;

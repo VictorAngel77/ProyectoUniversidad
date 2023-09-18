@@ -4,10 +4,10 @@
 
 package com.mycompany.transversal;
 
-import com.mycompany.transversal.DAO.AlumnoConexion;
-import com.mycompany.transversal.DAO.Conexion;
-import com.mycompany.transversal.DAO.InscripcionDAO;
-import com.mycompany.transversal.DAO.MateriaConexion;
+import Data.AlumnoConexion;
+import Data.Conexion;
+import Data.InscripcionData;
+import Data.MateriaConexion;
 import com.mycompany.transversal.Entidades.Alumno;
 import com.mycompany.transversal.Entidades.Inscripcion;
 import com.mycompany.transversal.Entidades.Materia;
@@ -27,7 +27,7 @@ public class Transversal {
 //        MateriaConexion mdao = new MateriaConexion(con);
 //        Materia materia = mdao.buscarMateria(1);
 //        System.out.println(materia.getNombre());
-       /* List<Alumno> alum = new InscripcionDAO().fetchAlumnosByMateria(1);
+       /* List<Alumno> alum = new InscripcionData().fetchAlumnosByMateria(1);
         
         alum.forEach( alu -> 
                 System.out.println(alu.getApellido())

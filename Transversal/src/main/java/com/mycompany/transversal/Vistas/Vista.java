@@ -5,9 +5,8 @@
 package com.mycompany.transversal.Vistas;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.mycompany.transversal.Entidades.Materia;
 import com.mycompany.transversal.Vistas.Materia.MateriaView;
-import com.mycompany.transversal.Vistas.Materia.NuevaMateria;
+
 
 /**
  *

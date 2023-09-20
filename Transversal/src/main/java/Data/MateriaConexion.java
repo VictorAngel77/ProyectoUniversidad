@@ -31,7 +31,7 @@ public class MateriaConexion {
         this.con = conn.getConnection();
     }
 
-    public void newAlumno(Materia materia) {
+    public boolean newMateria(Materia materia) {
         try {
             String sql = "INSERT INTO `materia`(`nombre`, `año`, `estado`) VALUES (?,?,?)";
 
@@ -42,11 +42,11 @@ public class MateriaConexion {
             sqlPS.setBoolean(3, materia.isEstado());
             sqlPS.executeUpdate();
             sqlPS.close();
-
+            return true;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia" + ex.getMessage());
         }
-
+return false;
     }
 
     public Materia buscarMateria(int id) {
@@ -73,7 +73,7 @@ public class MateriaConexion {
         return materia;
     }
     
-        public void modificarMateria(Materia materia) {
+        public boolean modificarMateria(Materia materia) {
         String sql = "UPDATE materia SET nombre = ? , año = ? WHERE idMateria = ?";
         PreparedStatement ps = null;
         try {
@@ -84,12 +84,14 @@ public class MateriaConexion {
             int exito = ps.executeUpdate();
             if (exito == 1) {
                 JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+                return true;
             } else {
-                JOptionPane.showMessageDialog(null, "El matria no existe");
+                JOptionPane.showMessageDialog(null, "La materia no existe");
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Materia " + ex.getMessage());
         }
+        return false;
     }
         
         public void eliminarMateria(int id) {
@@ -137,4 +139,24 @@ public class MateriaConexion {
         return materiaSeparadas;
     }
 
+          public boolean materiaExistente(String nombre,int anio) {
+        String sql = "SELECT nombre , año FROM materia WHERE  año = ? AND nombre= ? ";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, anio);
+            ps.setString(2, nombre);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+        
 }

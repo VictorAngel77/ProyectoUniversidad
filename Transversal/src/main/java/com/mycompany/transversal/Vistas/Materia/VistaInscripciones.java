@@ -10,8 +10,11 @@ import Data.InscripcionData;
 import com.mycompany.transversal.Entidades.Alumno;
 import com.mycompany.transversal.Entidades.Inscripcion;
 import com.mycompany.transversal.Entidades.Materia;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,7 +39,11 @@ public class VistaInscripciones extends javax.swing.JPanel {
         initComponents();
         ListaAlumnos = adao.listarAlumnos();
         idao = new InscripcionData();
-        listaInscripciones = idao.fetchInscripciones();
+        try {
+            listaInscripciones = idao.fetchInscripciones();
+        } catch (SQLException ex) {
+            Logger.getLogger(VistaInscripciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 

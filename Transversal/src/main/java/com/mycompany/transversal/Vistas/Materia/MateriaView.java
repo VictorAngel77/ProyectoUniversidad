@@ -3,19 +3,54 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.mycompany.transversal.Vistas.Materia;
+
+import Data.Conexion;
+import Data.MateriaConexion;
+import com.mycompany.transversal.Entidades.Materia;
 import com.mycompany.transversal.Vistas.Materia.NuevaMateria;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jdbar
  */
 public class MateriaView extends javax.swing.JPanel {
 
+    static Conexion conn = new Conexion();
+    static MateriaConexion matConn = new MateriaConexion(conn);
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+
+        @Override
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
+    };
+
     /**
      * Creates new form Materia
      */
     public MateriaView() {
         initComponents();
-        
+        agregarCabecera();
+    }
+
+    private void agregarCabecera() {
+        modelo.addColumn("ID");
+        modelo.addColumn("Materia");
+        modelo.addColumn("Año");
+
+        jtListaMaterias.setModel(modelo);
+    }
+
+    private void borrarfilas() {
+        int f = jtListaMaterias.getRowCount() - 1;
+
+        for (int i = f; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+
     }
 
     /**
@@ -30,14 +65,12 @@ public class MateriaView extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtListaMaterias = new javax.swing.JTable();
         JbBaja = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jtBuscar = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jbNueva = new javax.swing.JButton();
+        jbModificar = new javax.swing.JButton();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 400));
 
@@ -52,7 +85,7 @@ public class MateriaView extends javax.swing.JPanel {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtListaMaterias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -63,7 +96,7 @@ public class MateriaView extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtListaMaterias);
 
         JbBaja.setText("Baja");
         JbBaja.setMaximumSize(new java.awt.Dimension(65, 32));
@@ -74,23 +107,25 @@ public class MateriaView extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setText("Buscar");
+        jLabel1.setText("Codigo:");
 
-        jButton1.setText("Nueva");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtBuscarKeyReleased(evt);
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel2.setText("Filtrar");
-
-        jButton3.setText("Modificar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jbNueva.setText("Nueva");
+        jbNueva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jbNuevaActionPerformed(evt);
+            }
+        });
+
+        jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
             }
         });
 
@@ -99,23 +134,18 @@ public class MateriaView extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(27, 192, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(JbBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(144, 144, 144)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(92, 92, 92)
-                        .addComponent(jLabel2)
                         .addGap(32, 32, 32)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(48, Short.MAX_VALUE))))
+                        .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(152, 152, 152))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,79 +153,115 @@ public class MateriaView extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                    .addComponent(jbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevaActionPerformed
         // TODO add your handling code here:
         NuevaMateria nuevaMateria = new NuevaMateria();
-        nuevaMateria.setLocation(0,0);
-        nuevaMateria.setSize(700,400);
+        nuevaMateria.setLocation(0, 0);
+        nuevaMateria.setSize(700, 400);
         nuevaMateria.setVisible(true);
-        
-        
+
         removeAll();
         add(nuevaMateria);
         repaint();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jbNuevaActionPerformed
 
     private void JbBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbBajaActionPerformed
-        // TODO add your handling code here:
-        BajaView baja = new BajaView();
-        baja.setLocation(0, 0);
-        baja.setSize(700 , 400);
-        
-        removeAll();
-        add(baja);
-        repaint();
+
+        int fila = jtListaMaterias.getSelectedRow();
+        if (fila >= 0) {
+            int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere dar de baja a esta materia?",
+                    "Confirmacion de Baja", JOptionPane.OK_CANCEL_OPTION);
+            if (respuesta == JOptionPane.OK_OPTION) {
+                int idbaja = (int) modelo.getValueAt(fila, 0);
+                matConn.eliminarMateria(idbaja);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una Materia");
+        }
+        borrarfilas();
+        jtBuscar.setText("");
     }//GEN-LAST:event_JbBajaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        ModificarView mod = new ModificarView();
-        mod.setLocation(0, 0);
-        mod.setSize(700,400);
-        
-        removeAll();
-        add(mod);
-        repaint();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        int filaSelec = jtListaMaterias.getSelectedRow();
+        if (filaSelec >= 0) {
+            int id = (int) modelo.getValueAt(filaSelec, 0);
+            String nombre = (String) modelo.getValueAt(filaSelec, 1);
+            int anio = (int) modelo.getValueAt(filaSelec, 2);
 
+            Materia mate = new Materia(nombre, anio, true);
+            mate.setIdMateria(id);
+
+            ModificarView mod = new ModificarView(mate);
+            mod.setLocation(0, 0);
+            mod.setSize(700, 400);
+
+            removeAll();
+            add(mod);
+            repaint();
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar una materia");
+        }
+
+    }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
+        borrarfilas();
+        Materia materia;
+        if (!jtBuscar.getText().isEmpty() && esNumero()) {
+            materia = matConn.buscarMateria(Integer.valueOf(jtBuscar.getText()));
+            modelo.addRow(new Object[]{
+                materia.getIdMateria(),
+                materia.getNombre(),
+                materia.getAño()
+            });
+        }
+     }//GEN-LAST:event_jtBuscarKeyReleased
+
+    private boolean esNumero() {
+        try {
+            Integer.parseInt(jtBuscar.getText());
+            return true;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error debe ingresar un numero");
+        }
+        jtBuscar.setText("");
+        return false;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbBaja;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbModificar;
+    private javax.swing.JButton jbNueva;
     private javax.swing.JTextField jtBuscar;
+    private javax.swing.JTable jtListaMaterias;
     // End of variables declaration//GEN-END:variables
 }

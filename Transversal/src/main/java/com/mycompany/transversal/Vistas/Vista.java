@@ -4,7 +4,6 @@
  */
 package com.mycompany.transversal.Vistas;
 
-
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.mycompany.transversal.Entidades.Materia;
 import com.mycompany.transversal.Vistas.Materia.MateriaView;
@@ -21,6 +20,7 @@ public class Vista extends javax.swing.JFrame {
      */
     public Vista() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -46,12 +46,12 @@ public class Vista extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 430));
 
         jTabbedPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTabbedPane1AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -95,12 +95,12 @@ public class Vista extends javax.swing.JFrame {
         VistaMaterias.setMaximumSize(new java.awt.Dimension(700, 400));
         VistaMaterias.setMinimumSize(new java.awt.Dimension(700, 400));
         VistaMaterias.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 VistaMateriasAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         VistaMaterias.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,7 +130,7 @@ public class Vista extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,14 +150,14 @@ public class Vista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-     // TODO add your handling code here: 
+        // TODO add your handling code here: 
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded
         // TODO add your handling code here:
         AlumnoView alumno = new AlumnoView();
-        alumno.setLocation(0,0);
-        alumno.setSize(700,400);
+        alumno.setLocation(0, 0);
+        alumno.setSize(700, 400);
         VistaAlumnos.removeAll();
         VistaAlumnos.add(alumno);
         VistaAlumnos.revalidate();
@@ -172,14 +172,14 @@ public class Vista extends javax.swing.JFrame {
 
     private void VistaMateriasAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_VistaMateriasAncestorAdded
         // TODO add your handling code here:
-      MateriaView materia = new MateriaView();
-      materia.setLocation(0, 0);
-      materia.setSize(700,400);
-      
-      VistaMaterias.removeAll();
-      VistaMaterias.add(materia);
-      VistaMaterias.revalidate();
-      VistaMaterias.repaint();
+        MateriaView materia = new MateriaView();
+        materia.setLocation(0, 0);
+        materia.setSize(700, 400);
+
+        VistaMaterias.removeAll();
+        VistaMaterias.add(materia);
+        VistaMaterias.revalidate();
+        VistaMaterias.repaint();
     }//GEN-LAST:event_VistaMateriasAncestorAdded
 
     /**

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.transversal.Vistas.Materia;
+package com.mycompany.transversal.Vistas.Materia.Inscripcion;
 
 import Data.AlumnoConexion;
 import Data.Conexion;

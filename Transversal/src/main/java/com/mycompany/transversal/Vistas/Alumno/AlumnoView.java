@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package com.mycompany.transversal.Vistas.Materia;
+package com.mycompany.transversal.Vistas.Alumno;
 
 import com.mycompany.transversal.Entidades.Alumno;
 import java.time.LocalDate;
@@ -133,10 +133,16 @@ public class AlumnoView extends javax.swing.JPanel {
             String apellido = jtApellido.getText();
             int dni = Integer.parseInt(jtDNI.getText());
             LocalDate fechaNacimineto = JDFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            String dniText = jtDNI.getText();
 
+            if (name.isEmpty() || apellido.isEmpty() || dniText.isEmpty()) {
+                resultado.setText("Todos los datos deben estar completados");
+                resultado.setForeground(Color.red);
+            } else {
                 Alumno alumno = new Alumno();
                 alumno.setNombre(name);
                 alumno.setApellido(apellido);
+                alumno.setDni(dni);
                 alumno.setFechaNAc(fechaNacimineto);
                 alumno.setActivo(true);
 
@@ -144,10 +150,10 @@ public class AlumnoView extends javax.swing.JPanel {
 
                 resultado.setText("Alumno agregado a la base de datos");
                 resultado.setForeground(Color.GREEN);
+            }
 
-            
         } catch (Exception e) {
-            resultado.setText("Verifique los datos ingresados");
+            resultado.setText("Verifique la conexion a la base de datos");
             resultado.setForeground(Color.RED);
         }
 

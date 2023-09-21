@@ -6,6 +6,7 @@ package com.mycompany.transversal.Vistas;
 
 import com.mycompany.transversal.Vistas.Alumno.AlumnoView;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.mycompany.transversal.Vistas.Alumno.BusquedaAlumno;
 import com.mycompany.transversal.Vistas.Materia.Inscripcion.VistaInscripciones;
 import com.mycompany.transversal.Vistas.Materia.MateriaView;
 
@@ -179,7 +180,7 @@ public class Vista extends javax.swing.JFrame {
 
     private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded
         // TODO add your handling code here:
-        AlumnoView alumno = new AlumnoView();
+        BusquedaAlumno alumno = new BusquedaAlumno();
         alumno.setLocation(0, 0);
         alumno.setSize(700, 400);
         VistaAlumnos.removeAll();

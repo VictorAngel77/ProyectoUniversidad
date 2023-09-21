@@ -6,6 +6,7 @@ package com.mycompany.transversal.Vistas;
 
 import com.mycompany.transversal.Vistas.Alumno.AlumnoView;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
+import com.mycompany.transversal.Vistas.Materia.Inscripcion.VistaInscripciones;
 import com.mycompany.transversal.Vistas.Materia.MateriaView;
 
 
@@ -14,12 +15,21 @@ import com.mycompany.transversal.Vistas.Materia.MateriaView;
  * @author jdbar
  */
 public class Vista extends javax.swing.JFrame {
-
+    VistaInscripciones vins;
     /**
      * Creates new form Vista
      */
     public Vista() {
         initComponents();
+        vins = new VistaInscripciones();
+        jLayeredPane3.removeAll();
+        
+        vins.setLocation(0, 0);
+        vins.setSize(700, 400);
+        
+        jLayeredPane3.add(vins);
+        jLayeredPane3.repaint();
+
         this.setLocationRelativeTo(null);
     }
 
@@ -40,16 +50,15 @@ public class Vista extends javax.swing.JFrame {
         VistaMaterias = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(700, 430));
 
         jPanel1.setMaximumSize(new java.awt.Dimension(700, 430));
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 430));
 
         jTabbedPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jTabbedPane1AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -57,6 +66,16 @@ public class Vista extends javax.swing.JFrame {
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTabbedPane1MouseClicked(evt);
+            }
+        });
+        jTabbedPane1.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jTabbedPane1ComponentShown(evt);
+            }
+        });
+        jTabbedPane1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTabbedPane1PropertyChange(evt);
             }
         });
 
@@ -71,13 +90,18 @@ public class Vista extends javax.swing.JFrame {
         );
         VistaAlumnosLayout.setVerticalGroup(
             VistaAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+            .addGap(0, 399, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Alumnos", VistaAlumnos);
 
         jLayeredPane3.setMaximumSize(new java.awt.Dimension(700, 430));
         jLayeredPane3.setPreferredSize(new java.awt.Dimension(700, 430));
+        jLayeredPane3.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                jLayeredPane3ComponentResized(evt);
+            }
+        });
 
         javax.swing.GroupLayout jLayeredPane3Layout = new javax.swing.GroupLayout(jLayeredPane3);
         jLayeredPane3.setLayout(jLayeredPane3Layout);
@@ -87,7 +111,7 @@ public class Vista extends javax.swing.JFrame {
         );
         jLayeredPane3Layout.setVerticalGroup(
             jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
+            .addGap(0, 399, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Inscripciones", jLayeredPane3);
@@ -95,10 +119,10 @@ public class Vista extends javax.swing.JFrame {
         VistaMaterias.setMaximumSize(new java.awt.Dimension(700, 400));
         VistaMaterias.setMinimumSize(new java.awt.Dimension(700, 400));
         VistaMaterias.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 VistaMateriasAncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -130,7 +154,7 @@ public class Vista extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -175,12 +199,24 @@ public class Vista extends javax.swing.JFrame {
         MateriaView materia = new MateriaView();
         materia.setLocation(0, 0);
         materia.setSize(700, 400);
-
         VistaMaterias.removeAll();
         VistaMaterias.add(materia);
         VistaMaterias.revalidate();
         VistaMaterias.repaint();
     }//GEN-LAST:event_VistaMateriasAncestorAdded
+
+    private void jTabbedPane1ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTabbedPane1ComponentShown
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jTabbedPane1ComponentShown
+
+    private void jTabbedPane1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1PropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1PropertyChange
+
+    private void jLayeredPane3ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLayeredPane3ComponentResized
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLayeredPane3ComponentResized
 
     /**
      * @param args the command line arguments

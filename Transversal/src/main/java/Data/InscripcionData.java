@@ -108,18 +108,19 @@ public class InscripcionData {
         List<Materia> lista = new ArrayList<Materia>();
 
         ps = conn.prepareStatement(
-                "select materia.idMateria, nombre, año"
-                + "from inscripcion join materia "
-                + "on inscripcion.idMateria = materia.idMateria "
-                + "where idAlumno != ?;");
+                "SELECT idMateria, nombre, año "
+                + "FROM materia "
+                + "WHERE idMateria NOT IN ("
+                + "SELECT idMateria "
+                + "FROM inscripcion "
+                + "WHERE idAlumno = ?);");
         ps.setInt(1, id);
         rs = ps.executeQuery();
         while (rs.next()) {
             Integer idMateria = rs.getInt("idMateria");
             String nombre = rs.getString("nombre");
             Integer año = rs.getInt("año");
-            boolean estado = rs.getBoolean("estado");
-            Materia materia = new Materia(nombre, año, estado);
+            Materia materia = new Materia(nombre, año, true);
             materia.setIdMateria(idMateria);
             lista.add(materia);
         }

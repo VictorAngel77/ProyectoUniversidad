@@ -41,6 +41,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
         idao = new InscripcionData();
         try {
             listaInscripciones = idao.fetchInscripciones();
+            
         } catch (SQLException ex) {
             Logger.getLogger(VistaInscripciones.class.getName()).log(Level.SEVERE, null, ex);
         }

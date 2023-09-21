@@ -4,6 +4,7 @@
  */
 package com.mycompany.transversal.Vistas;
 
+import com.mycompany.transversal.Vistas.Materia.AlumnoView;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.mycompany.transversal.Vistas.Materia.MateriaView;
 

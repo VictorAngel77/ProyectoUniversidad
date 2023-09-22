@@ -80,11 +80,11 @@ public class AlumnoConexion {
     
     public List<Alumno> buscarAlumnoPorDni(int dni) {
         List<Alumno> listaAlumnos = new ArrayList<>();
-        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE CAST(dni AS CHAR) LIKE ? AND estado = 1";
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE LIKE ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(dni, "%");
+            ps.setString(1, "%" + dni + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Alumno alumno = new Alumno();

@@ -88,8 +88,8 @@ public class Alumno {
 
     @Override
     public String toString() {
-        return this.idAlumno + " " + this.Dni + " "  + this.apellido + " " + this.nombre;
-        //return "Alumno: " + "idAlumno: " + idAlumno + ", Apellido: " + apellido + ", Nombre: " + nombre + ", Fecha de nacimineto: " + fechaNAc +  ", DNI: " + Dni + ", Estado: " + activo;
+        //return this.idAlumno + " " + this.Dni + " "  + this.apellido + " " + this.nombre;
+        return "Alumno: " + "idAlumno: " + idAlumno + ", Apellido: " + apellido + ", Nombre: " + nombre + ", Fecha de nacimineto: " + fechaNAc +  ", DNI: " + Dni + ", Estado: " + activo;
     }
 
     

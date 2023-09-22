@@ -236,14 +236,12 @@ public class VistaInscripciones extends javax.swing.JPanel {
     public void initTablaInscripciones() {
         if (AlumnosCB.getSelectedItem() != null) {
         DefaultTableModel model = new DefaultTableModel();
-        List.of("id", "Materia", "Año").forEach(model::addColumn);
-
- 
             try {
                 int id = Integer.parseInt(
-                        AlumnosCB.getSelectedItem().toString().split(" ")[0]
+                        AlumnosCB.getSelectedItem().toString().split(",")[0].split(" ")[2]
                 );
                 if (filtro_inscripto.isSelected()) {
+                    List.of("id", "Materia", "Año", "Nota").forEach(model::addColumn);
                     new InscripcionData().fetchInscripcionesByIdAlumno(id)
                         .forEach(ins -> {
                             model.addRow(
@@ -251,10 +249,12 @@ public class VistaInscripciones extends javax.swing.JPanel {
                                         String.valueOf(ins.getIdInscripcion()),
                                         ins.getMateria().getNombre(),
                                         String.valueOf(ins.getMateria().getAño()),
+                                        String.valueOf(ins.getNota())
                                     }
                             );
                         });
                 } else {
+                    List.of("id", "Materia", "Año").forEach(model::addColumn);
                     new InscripcionData().fetchMateriasNoCursadas(id)
                             .forEach(mat -> {
                             model.addRow(

@@ -71,6 +71,27 @@ return false;
         return materias;
     }
     
+    public Materia buscarMateriaByid(int id) {
+        Materia materia = new Materia();
+        String sql = "SELECT idMateria, nombre , año , estado FROM materia WHERE idMateria like ? AND estado = 1";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + id + "%");
+            ResultSet rs = ps.executeQuery();
+           if (rs.next()) {
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAño(rs.getInt("año"));
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return materia;
+    }
+    
+    
         public boolean modificarMateria(Materia materia) {
         String sql = "UPDATE materia SET nombre = ? , año = ? WHERE idMateria = ?";
         PreparedStatement ps = null;

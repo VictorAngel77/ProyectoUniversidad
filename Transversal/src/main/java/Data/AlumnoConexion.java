@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
+import com.mycompany.transversal.Entidades.Alumno;
 /**
  *
  * @author Victor Angel
@@ -78,30 +78,30 @@ public class AlumnoConexion {
     }
 
     
-    public Alumno buscarAlumnoPorDni(int dni) {
-        Alumno alumno = null;
-        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE dni=? AND estado = 1";
+    public List<Alumno> buscarAlumnoPorDni(int dni) {
+        List<Alumno> listaAlumnos = new ArrayList<>();
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE CAST(dni AS CHAR) LIKE ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, dni);
+            ps.setString(dni, "%");
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                alumno = new Alumno();
+            while (rs.next()) {
+                Alumno alumno = new Alumno();
+                
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
                 alumno.setDni(rs.getInt("dni"));
                 alumno.setApellido(rs.getString("apellido"));
                 alumno.setNombre(rs.getString("nombre"));
                 alumno.setFechaNAc(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setActivo(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe el alumno");
+                listaAlumnos.add(alumno);
             }
             ps.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
         }
-        return alumno;
+        return listaAlumnos;
     }
 
     public List<Alumno> listarAlumnos() {

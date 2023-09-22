@@ -80,7 +80,7 @@ public class AlumnoConexion {
     
     public List<Alumno> buscarAlumnoPorDni(int dni) {
         List<Alumno> listaAlumnos = new ArrayList<>();
-        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE LIKE ? AND estado = 1";
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE dni LIKE ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);

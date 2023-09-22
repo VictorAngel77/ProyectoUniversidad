@@ -4,18 +4,38 @@
  */
 package com.mycompany.transversal.Vistas.Alumno;
 
+import Data.AlumnoConexion;
+import Data.Conexion;
+import com.mycompany.transversal.Entidades.Alumno;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author jdbar
  */
 public class BusquedaAlumno extends javax.swing.JPanel {
 
+    static Conexion conn = new Conexion();
+    static AlumnoConexion aluConn = new AlumnoConexion(conn);
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+
+        @Override
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
+    };
+
     /**
      * Creates new form BusquedaAlumno
      */
     public BusquedaAlumno() {
         initComponents();
-    }
+        agregarCabecera();
+    } //ESO ME ESTA PASANDO DESDE HOY , NO TERMINA DE CARGAR SI
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,6 +55,11 @@ public class BusquedaAlumno extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(700, 400));
 
         JTBuscar.setToolTipText("Buscar");
+        JTBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTBuscarKeyReleased(evt);
+            }
+        });
 
         JTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -102,18 +127,50 @@ public class BusquedaAlumno extends javax.swing.JPanel {
         AlumnoView alumno = new AlumnoView();
         alumno.setLocation(0, 0);
         alumno.setSize(700, 400);
-        
+
         removeAll();
         add(alumno);
         revalidate();
         repaint();
-        
+
     }//GEN-LAST:event_JBNuevoActionPerformed
 
     private void JBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEliminarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JBEliminarActionPerformed
 
+    private void JTBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBuscarKeyReleased
+        // TODO add your handling code here:
+        borrarfilas();
+        List<Alumno> alumnos = new ArrayList();
+        if (!JTBuscar.getText().isEmpty() && esNumero()) {
+            alumnos = aluConn.buscarAlumnoPorDni(Integer.valueOf(JTBuscar.getText()));
+
+            if (alumnos.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "El DNI ingresado no corresponde a ningún alumno");
+            } else {
+                for (Alumno alumno : alumnos) {
+                    modelo.addRow(new Object[]{
+                        alumno.getIdAlumno(),
+                        alumno.getDni(),
+                        alumno.getNombre(),
+                        alumno.getApellido()
+                    });
+                }
+
+            }
+        }
+    }//GEN-LAST:event_JTBuscarKeyReleased
+    private boolean esNumero() {
+        try {
+            Integer.parseInt(JTBuscar.getText());
+            return true;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error debe ingresar un numero");
+        }
+        JTBuscar.setText("");
+        return false;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JBEliminar;
@@ -122,4 +179,23 @@ public class BusquedaAlumno extends javax.swing.JPanel {
     private javax.swing.JTable JTabla;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    private void agregarCabecera() {
+        modelo.addColumn("ID");
+        modelo.addColumn("DNI");
+        modelo.addColumn("Nombre");
+        modelo.addColumn("Apellido");
+
+        JTabla.setModel(modelo);
+
+    }
+
+    private void borrarfilas() {
+        int f = JTabla.getRowCount() - 1;
+
+        for (int i = f; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+
+    }
 }

@@ -234,6 +234,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
     }
 
     public void initTablaInscripciones() {
+        if (AlumnosCB.getSelectedItem() != null) {
         DefaultTableModel model = new DefaultTableModel();
         List.of("id", "Materia", "Año").forEach(model::addColumn);
 
@@ -270,6 +271,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
+        }
         
     }
 

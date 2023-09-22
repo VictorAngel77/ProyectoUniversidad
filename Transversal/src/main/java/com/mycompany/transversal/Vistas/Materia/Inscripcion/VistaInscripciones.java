@@ -238,7 +238,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
         DefaultTableModel model = new DefaultTableModel();
             try {
                 int id = Integer.parseInt(
-                        AlumnosCB.getSelectedItem().toString().split(",")[0].split(" ")[2]
+                        AlumnosCB.getSelectedItem().toString().split(" ")[1]
                 );
                 if (filtro_inscripto.isSelected()) {
                     List.of("id", "Materia", "Año", "Nota").forEach(model::addColumn);

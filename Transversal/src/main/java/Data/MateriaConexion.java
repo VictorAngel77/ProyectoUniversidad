@@ -49,28 +49,26 @@ public class MateriaConexion {
 return false;
     }
 
-    public Materia buscarMateria(int id) {
-
-        Materia materia = null;
-        String sql = "SELECT nombre , año , estado FROM materia WHERE idMateria = ? AND estado = 1";
+    public List<Materia> buscarMateria(int id) {
+        List<Materia> materias = new ArrayList();
+        String sql = "SELECT idMateria, nombre , año , estado FROM materia WHERE idMateria like ? AND estado = 1";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setString(1, "%" + id + "%");
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                materia = new Materia();
-                materia.setIdMateria(id);
+            while (rs.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
                 materia.setNombre(rs.getString("nombre"));
-                materia.setEstado(rs.getBoolean("estado"));
-            } else {
-                throw new IllegalArgumentException("No existe la materia con ID: " + id);
+                materia.setAño(rs.getInt("año"));
+                materias.add(materia);
             }
             ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return materia;
+        return materias;
     }
     
         public boolean modificarMateria(Materia materia) {

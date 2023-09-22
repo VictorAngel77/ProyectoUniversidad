@@ -33,7 +33,7 @@ public class TestAlumnoConexion {
         System.out.println(alumnoTest.getApellido());
 
         //Buscar por DNI
-        alumnoTest = adao.buscarAlumnoPorDni(32563542);
+        //alumnoTest = adao.buscarAlumnoPorDni(32563542);
         System.out.println(alumnoTest.getNombre());
 
         //Mostrando Lista Original

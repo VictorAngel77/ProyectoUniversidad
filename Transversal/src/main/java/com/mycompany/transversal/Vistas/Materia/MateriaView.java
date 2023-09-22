@@ -8,6 +8,8 @@ import Data.Conexion;
 import Data.MateriaConexion;
 import com.mycompany.transversal.Entidades.Materia;
 import com.mycompany.transversal.Vistas.Materia.NuevaMateria;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -230,15 +232,21 @@ public class MateriaView extends javax.swing.JPanel {
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
-        borrarfilas();
-        Materia materia;
+  borrarfilas();
+        List<Materia> materias = new ArrayList();
         if (!jtBuscar.getText().isEmpty() && esNumero()) {
-            materia = matConn.buscarMateria(Integer.valueOf(jtBuscar.getText()));
-            modelo.addRow(new Object[]{
-                materia.getIdMateria(),
-                materia.getNombre(),
-                materia.getAño()
-            });
+            materias = matConn.buscarMateria(Integer.valueOf(jtBuscar.getText()));
+            if (materias.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "La ID ingresada no correspinde a ninguna materia");
+            } else {
+                for (Materia materia : materias) {
+                    modelo.addRow(new Object[]{
+                        materia.getIdMateria(),
+                        materia.getNombre(),
+                        materia.getAño()
+                    });
+                }
+            }
         }
      }//GEN-LAST:event_jtBuscarKeyReleased
 

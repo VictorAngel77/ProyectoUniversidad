@@ -66,6 +66,12 @@ public class Inscripcion {
     public void setIdInscripcion(Integer idInscripcion) {
         this.idInscripcion = idInscripcion;
     }
+
+    @Override
+    public String toString() {
+        return "Inscripcion{" + "idInscripcion=" + idInscripcion + ", alumno=" + alumno + ", materia=" + materia + ", nota=" + nota + '}';
+    }
+    
     
     
 }

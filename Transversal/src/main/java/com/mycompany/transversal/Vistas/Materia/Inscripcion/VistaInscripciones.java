@@ -11,10 +11,7 @@ import com.mycompany.transversal.Entidades.Alumno;
 import com.mycompany.transversal.Entidades.Inscripcion;
 import com.mycompany.transversal.Entidades.Materia;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +24,9 @@ public class VistaInscripciones extends javax.swing.JPanel {
      * Creates new form VistaInscripciones
      */
     public VistaInscripciones() {
+        con = new Conexion();
+        dbAlumnos = new AlumnoConexion(con);
+        dbInscripcion = new InscripcionData();
         initComponents();
         initData();
     }
@@ -43,37 +43,45 @@ public class VistaInscripciones extends javax.swing.JPanel {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaInscripciones = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        botonInscripbir = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
         AlumnosCB = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         filtro_inscripto = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
+        botonActualizarNota = new javax.swing.JButton();
 
         tablaInscripciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "idInscripcion", "Nombre", "Año"
+                "idInscripcion", "Nombre", "Año", "Nota"
             }
         ));
+        tablaInscripciones.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                tablaInscripcionesInputMethodTextChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaInscripciones);
 
-        jButton1.setText("Inscribir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonInscripbir.setText("Inscribir");
+        botonInscripbir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonInscripbirActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Anular Inscripcion");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        botonEliminar.setText("Eliminar Inscripcion");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                botonEliminarActionPerformed(evt);
             }
         });
 
@@ -122,6 +130,13 @@ public class VistaInscripciones extends javax.swing.JPanel {
             }
         });
 
+        botonActualizarNota.setText("Actualizar nota");
+        botonActualizarNota.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarNotaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,12 +144,13 @@ public class VistaInscripciones extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
+                        .addComponent(botonEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botonActualizarNota)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(botonInscripbir))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -142,12 +158,9 @@ public class VistaInscripciones extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(filtro_inscripto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(AlumnosCB, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(422, 422, 422)))
+                                .addComponent(jRadioButton4))
+                            .addComponent(AlumnosCB, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -161,38 +174,69 @@ public class VistaInscripciones extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filtro_inscripto)
                     .addComponent(jRadioButton4))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(botonEliminar)
+                    .addComponent(botonInscripbir)
+                    .addComponent(botonActualizarNota))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonInscripbirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInscripbirActionPerformed
         // TODO add your handling code here:
+        try {
+            int row = tablaInscripciones.getSelectedRow();
+            Integer idMateria = Integer.valueOf(
+                    modelo.getValueAt(row, 0).toString()
+            );
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+            Materia materia = new Materia();
+            materia.setIdMateria(idMateria);
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+            Alumno alumno = new Alumno();
+            double nota;
+            alumno.setIdAlumno(Integer.parseInt(
+                            AlumnosCB.getSelectedItem().toString().split(" ")[0]));
+            nota = Double.parseDouble(
+                    modelo.getValueAt(row, 3).toString());
+
+            Inscripcion inscripcion = new Inscripcion(
+                    alumno,
+                    materia,
+                    nota);
+            dbInscripcion.saveInscripcion(inscripcion);
+        } catch (NumberFormatException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            initData();
+        }
+
+    }//GEN-LAST:event_botonInscripbirActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        Integer idInscripcion = Integer.valueOf(modelo.getValueAt(tablaInscripciones.getSelectedRow(), 0).toString());
+        dbInscripcion.deleteInscripcion(idInscripcion);
+        setupTablaInscripciones();
+    }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void filtro_inscriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtro_inscriptoActionPerformed
         // TODO add your handling code here:
-        initTablaInscripciones();
+        setupTablaInscripciones();
+
     }//GEN-LAST:event_filtro_inscriptoActionPerformed
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
         // TODO add your handling code here:
-        initTablaInscripciones();
+        setupTablaInscripciones();
     }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     private void AlumnosCBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlumnosCBActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_AlumnosCBActionPerformed
 
     private void filtro_inscriptoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_filtro_inscriptoStateChanged
@@ -205,74 +249,102 @@ public class VistaInscripciones extends javax.swing.JPanel {
 
     private void AlumnosCBPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_AlumnosCBPopupMenuWillBecomeInvisible
         // TODO add your handling code here:
-        initTablaInscripciones();
+        setupTablaInscripciones();
     }//GEN-LAST:event_AlumnosCBPopupMenuWillBecomeInvisible
+
+    private void botonActualizarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarNotaActionPerformed
+        // TODO add your handling code here:
+        int row = tablaInscripciones.getSelectedRow();
+        int id = Integer.parseInt(modelo.getValueAt(row, 0).toString());
+        double nota = Double.parseDouble(modelo.getValueAt(row, 3).toString());
+        if (nota > 0.0 && nota <= 10.0) {
+            dbInscripcion.actualizarNota(id, nota);
+        }
+        setupTablaInscripciones();
+    }//GEN-LAST:event_botonActualizarNotaActionPerformed
+
+    private void tablaInscripcionesInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_tablaInscripcionesInputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaInscripcionesInputMethodTextChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> AlumnosCB;
+    private javax.swing.JButton botonActualizarNota;
+    private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonInscripbir;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JRadioButton filtro_inscripto;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaInscripciones;
     // End of variables declaration//GEN-END:variables
- public void initData() {
-        initComboAlumnos();
-        initTablaInscripciones();
+    private static Conexion con;
+    private static List<Alumno> alumnos;
+    private static AlumnoConexion dbAlumnos;
+    private static InscripcionData dbInscripcion;
+    private static DefaultTableModel modelo;
+
+    public void initData() {
+        alumnos = dbAlumnos.listarAlumnos();
+        setupBotones();
+        setupAlumnosCB();
+        setupTablaInscripciones();
     }
 
-    public void initComboAlumnos() {
+    public void setupAlumnosCB() {
         AlumnosCB.removeAllItems();
-
-        new AlumnoConexion(new Conexion()).listarAlumnos()
+        alumnos
                 .forEach(al -> AlumnosCB.addItem(al.toString()));
-
     }
 
-    public void initTablaInscripciones() {
-        if (AlumnosCB.getSelectedItem() != null) {
-        DefaultTableModel model = new DefaultTableModel();
-            try {
-                int id = Integer.parseInt(
-                        AlumnosCB.getSelectedItem().toString().split(" ")[1]
-                );
-                if (filtro_inscripto.isSelected()) {
-                    List.of("id", "Materia", "Año", "Nota").forEach(model::addColumn);
-                    new InscripcionData().fetchInscripcionesByIdAlumno(id)
+    public void setupBotones() {
+        if (filtro_inscripto.isSelected()) {
+            botonEliminar.setVisible(true);
+            botonInscripbir.setVisible(false);
+            botonActualizarNota.setVisible(true);
+        } else {
+            botonActualizarNota.setVisible(false);
+            botonEliminar.setVisible(false);
+            botonInscripbir.setVisible(true);
+        }
+    }
+
+    public void setupTablaInscripciones() {
+        try {
+            modelo = new DefaultTableModel(new String[]{"id", "Materia", "Año", "Nota"}, 0);
+            Integer idAlumno = Integer.valueOf(
+                    AlumnosCB.getSelectedItem().toString().split(" ")[0]);
+            boolean filtro = filtro_inscripto.isSelected();
+            if (filtro) {
+                dbInscripcion.fetchInscripcionesByIdAlumno(idAlumno)
                         .forEach(ins -> {
-                            model.addRow(
+                            modelo.addRow(
                                     new Object[]{
                                         String.valueOf(ins.getIdInscripcion()),
                                         ins.getMateria().getNombre(),
                                         String.valueOf(ins.getMateria().getAño()),
                                         String.valueOf(ins.getNota())
-                                    }
-                            );
+                                    });
                         });
-                } else {
-                    List.of("id", "Materia", "Año").forEach(model::addColumn);
-                    new InscripcionData().fetchMateriasNoCursadas(id)
-                            .forEach(mat -> {
-                            model.addRow(
+            } else {
+                dbInscripcion.fetchMateriasNoCursadas(idAlumno)
+                        .forEach(mat -> {
+                            modelo.addRow(
                                     new Object[]{
                                         String.valueOf(mat.getIdMateria()),
                                         mat.getNombre(),
                                         String.valueOf(mat.getAño())
                                     });
-                });
-                                    }
-
-                
-                tablaInscripciones.setModel(model);
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                        });
             }
+
+            tablaInscripciones.setModel(modelo);
+            setupBotones();
+        } catch (SQLException sQLException) {
         }
-        
+
     }
 
 }

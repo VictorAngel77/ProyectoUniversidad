@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,13 +23,13 @@ import java.util.List;
  */
 public class InscripcionData {
 
-    private Conexion con = new Conexion();
-    private Connection conn = con.getConnection();
+    private static Conexion con = new Conexion();
+    private static Connection conn = con.getConnection();
     private PreparedStatement ps = null;
     private Statement st = null;
     private ResultSet rs = null;
-    private MateriaConexion materiaData = new MateriaConexion(con);
-    private AlumnoConexion aluData = new AlumnoConexion(con);
+    private static MateriaConexion materiaData = new MateriaConexion(con);
+    private static AlumnoConexion aluData = new AlumnoConexion(con);
 
     public InscripcionData() {
     }
@@ -36,14 +38,13 @@ public class InscripcionData {
         try {
             ps = conn.prepareStatement(
                     "insert into inscripcion "
-                  + "(idInscripcion, nota, idAlumno, idMateria) "
-                  + "values (null, ?, ?, ?);"
+                    + "(idInscripcion, nota, idAlumno, idMateria) "
+                    + "values (null, ?, ?, ?);"
             );
             ps.setDouble(1, insc.getNota());
             ps.setInt(2, insc.getAlumno().getIdAlumno());
             ps.setInt(3, insc.getMateria().getIdMateria());
             ps.executeUpdate();
-            ps.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -60,7 +61,6 @@ public class InscripcionData {
             Double nota = rs.getDouble("nota");
             lista.add(new Inscripcion(idInscripcion, alumno, materia, nota));
         }
-        Close();
         return lista;
     }
 
@@ -77,7 +77,6 @@ public class InscripcionData {
             Double nota = rs.getDouble("nota");
             lista.add(new Inscripcion(idInscripcion, alumno, materia, nota));
         }
-        Close();
         return lista;
     }
 
@@ -100,7 +99,6 @@ public class InscripcionData {
             materia.setIdMateria(idMateria);
             lista.add(materia);
         }
-        Close();
         return lista;
     }
 
@@ -124,7 +122,6 @@ public class InscripcionData {
             materia.setIdMateria(idMateria);
             lista.add(materia);
         }
-        Close();
         return lista;
     }
 
@@ -140,13 +137,24 @@ public class InscripcionData {
         }
     }
 
-    public void actualizarNota(int idAlumno, int idMateria, double nota) {
+    public void deleteInscripcion(int id) {
+        String sql = "delete from inscripcion where idInscripcion = ?";
         try {
-            String SQL = "UPDATE `inscripcion` SET `nota`=? WHERE alumno.idAlumno =? and materia.idMateria =?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+    public void actualizarNota(int id, double nota) {
+        try {
+            String SQL = "UPDATE `inscripcion` SET `nota`=? WHERE idInscripcion = ?";
             ps = conn.prepareStatement(SQL);
             ps.setDouble(1, nota);
-            ps.setInt(2, idAlumno);
-            ps.setInt(3, idMateria);
+            ps.setInt(2, id);
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error" + ex);
@@ -154,7 +162,7 @@ public class InscripcionData {
     }
 
     public List<Alumno> fetchAlumnosByMateria(int id) throws SQLException {
-        List<Alumno> lista = new ArrayList<Alumno>();
+        List<Alumno> lista = new ArrayList<>();
         String sql
                 = "select alumno.idAlumno, nombre, apellido, dni "
                 + "from inscripcion join alumno "
@@ -174,18 +182,7 @@ public class InscripcionData {
 
             lista.add(alumno);
         }
-        Close();
         return lista;
-    }
-    public void Close() {
-        try {
-            conn.close();
-            ps.close();
-            rs.close();
-            
-        } catch (Exception ex) {
-            System.out.println("Bye!");
-        }
-        
+
     }
 }

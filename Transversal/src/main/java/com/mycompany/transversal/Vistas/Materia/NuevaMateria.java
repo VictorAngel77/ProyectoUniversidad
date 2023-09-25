@@ -8,7 +8,7 @@ import Data.Conexion;
 import com.mycompany.transversal.Entidades.Materia;
 import static com.mycompany.transversal.Vistas.Materia.ModificarView.matConn;
 import java.awt.Color;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -126,22 +126,34 @@ public class NuevaMateria extends javax.swing.JPanel {
 
         String nombreMat = jtNombre.getText().toUpperCase();
         int anio = (int) jsAnio.getValue();
+        if (anio > 0 && anio < 7) {
+            if (!nombreMat.isEmpty()) {
 
-        boolean existe = matConn.materiaExistente(nombreMat, anio);
-        if (existe) {
-            JOptionPane.showMessageDialog(null, "ERROR. La materia ya existe");
-        } else {
-            Materia nueva = new Materia(nombreMat, anio, true);
-            boolean exito = matConn.newMateria(nueva);
-            if (exito) {
-                JLResultado.setText("Se guardo correctamente la materia");
-                JLResultado.setForeground(Color.GREEN);
+                boolean existe = matConn.materiaExistente(nombreMat, anio);
+                if (existe) {
+                    JLResultado.setText("Error! La materia ya existe");
+                    JLResultado.setForeground(Color.RED);
+                } else {
+                    Materia nueva = new Materia(nombreMat, anio, true);
+                    boolean exito = matConn.newMateria(nueva);
+                    if (exito) {
+                        JLResultado.setText("Se guardo correctamente la materia");
+                        JLResultado.setForeground(Color.GREEN);
 
+                    } else {
+                        JLResultado.setText("Error! al guardar materia");
+                        JLResultado.setForeground(Color.red);
+                    }
+                }
             } else {
-                JLResultado.setText("Error al guardar materia");
+                JLResultado.setText("Error! Nombre de la materia no puede estar vacio");
                 JLResultado.setForeground(Color.red);
             }
+        } else {
+            JLResultado.setText("Error! El año debe estar entre 1 y 6");
+            JLResultado.setForeground(Color.red);
         }
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
 

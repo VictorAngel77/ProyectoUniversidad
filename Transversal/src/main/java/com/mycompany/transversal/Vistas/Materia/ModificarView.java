@@ -8,7 +8,7 @@ import Data.Conexion;
 import Data.MateriaConexion;
 import com.mycompany.transversal.Entidades.Materia;
 import java.awt.Color;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -21,22 +21,22 @@ public class ModificarView extends javax.swing.JPanel {
 
     private Materia materiaModificar;
 
-
     public ModificarView(Materia mate) {
         this.materiaModificar = mate;
         initComponents();
         seteoCampos();
     }
-    
+
     public ModificarView() {
         initComponents();
     }
-    
+
     private void seteoCampos() {
         jtCodigo.setText(String.valueOf(materiaModificar.getIdMateria()));
         jtAnio.setText(String.valueOf(materiaModificar.getAño()));
         jtNombre.setText(materiaModificar.getNombre());
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,34 +167,45 @@ public class ModificarView extends javax.swing.JPanel {
     private void jbAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtrasActionPerformed
         // TODO add your handling code here:
         MateriaView materia = new MateriaView();
-        materia.setLocation(0,0);
-        materia.setSize(700,400);
-        
+        materia.setLocation(0, 0);
+        materia.setSize(700, 400);
+
         removeAll();
         add(materia);
         repaint();
     }//GEN-LAST:event_jbAtrasActionPerformed
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        
+
         int anio = Integer.valueOf(jtAnio.getText());
-        String nombre = jtNombre.getText();
-        
+        String nombre = jtNombre.getText().toUpperCase();
+
         materiaModificar.setAño(anio);
         materiaModificar.setNombre(nombre);
-        
-        boolean existe = matConn.materiaExistente(nombre, anio);
-        if (existe) {
-            JOptionPane.showMessageDialog(null, "ERROR. La materia ya existe");
-        } else {
-            boolean exito = matConn.modificarMateria(materiaModificar);
-            if (exito) {
-                jlRespuesta.setText("Modificado Exitosamente.");
-                jlRespuesta.setForeground(Color.GREEN);
+
+        if (anio > 0 && anio < 7) {
+            if (!nombre.isEmpty()) {
+                boolean existe = matConn.materiaExistente(nombre, anio);
+                if (existe) {
+                    jlRespuesta.setText("Error! La materia ya existe");
+                    jlRespuesta.setForeground(Color.RED);
+                } else {
+                    boolean exito = matConn.modificarMateria(materiaModificar);
+                    if (exito) {
+                        jlRespuesta.setText("Modificado Exitosamente.");
+                        jlRespuesta.setForeground(Color.GREEN);
+                    } else {
+                        jlRespuesta.setText("Error! al intentar modificar la materia");
+                        jlRespuesta.setForeground(Color.RED);
+                    }
+                }
             } else {
-                jlRespuesta.setText("Error al intentar modificar la materia");
-                jlRespuesta.setForeground(Color.RED);
+                jlRespuesta.setText("Error! Nombre de la materia no puede estar vacio");
+                jlRespuesta.setForeground(Color.red);
             }
+        } else {
+            jlRespuesta.setText("Error! El año debe estar entre 1 y 6");
+            jlRespuesta.setForeground(Color.RED);
         }
     }//GEN-LAST:event_jbGuardarActionPerformed
 

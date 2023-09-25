@@ -157,7 +157,7 @@ public class AlumnoView extends javax.swing.JPanel {
             if (name.isEmpty() || apellido.isEmpty() || dniText.isEmpty()) {
                 resultado.setText("Todos los datos deben estar completados");
                 resultado.setForeground(Color.red);
-            } 
+            } else {
             if (verificarEdad.getYears()>= 17) {
                 Alumno alumno = new Alumno();
                 alumno.setNombre(name);
@@ -178,7 +178,7 @@ public class AlumnoView extends javax.swing.JPanel {
             }else{
                 JOptionPane.showMessageDialog(null, "El alumno tiene que ser mayor a 17 años");
             }
-
+            }
         } catch (Exception e) {
             resultado.setText("Verifique la conexion a la base de datos");
             resultado.setForeground(Color.RED);

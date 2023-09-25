@@ -19,7 +19,11 @@ import javax.swing.table.DefaultTableModel;
  * @author cisco
  */
 public class VistaInscripciones extends javax.swing.JPanel {
-
+    private static Conexion con;
+    private static List<Alumno> alumnos;
+    private static AlumnoConexion dbAlumnos;
+    private static InscripcionData dbInscripcion;
+    private static DefaultTableModel modelo;
     /**
      * Creates new form VistaInscripciones
      */
@@ -200,8 +204,12 @@ public class VistaInscripciones extends javax.swing.JPanel {
             double nota;
             alumno.setIdAlumno(Integer.parseInt(
                             AlumnosCB.getSelectedItem().toString().split(" ")[0]));
-            nota = Double.parseDouble(
+            try {
+                nota = Double.parseDouble(
                     modelo.getValueAt(row, 3).toString());
+            } catch (Exception ex) {
+                nota = 0;
+            }
 
             Inscripcion inscripcion = new Inscripcion(
                     alumno,
@@ -280,11 +288,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaInscripciones;
     // End of variables declaration//GEN-END:variables
-    private static Conexion con;
-    private static List<Alumno> alumnos;
-    private static AlumnoConexion dbAlumnos;
-    private static InscripcionData dbInscripcion;
-    private static DefaultTableModel modelo;
+
 
     public void initData() {
         alumnos = dbAlumnos.listarAlumnos();

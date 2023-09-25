@@ -141,6 +141,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="resultado">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>

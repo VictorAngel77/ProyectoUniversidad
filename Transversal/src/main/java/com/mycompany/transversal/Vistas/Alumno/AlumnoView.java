@@ -74,6 +74,8 @@ public class AlumnoView extends javax.swing.JPanel {
             }
         });
 
+        resultado.setToolTipText("");
+
         jButton2.setText("Atras");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,6 +166,11 @@ public class AlumnoView extends javax.swing.JPanel {
 
                 resultado.setText("Alumno agregado a la base de datos");
                 resultado.setForeground(Color.GREEN);
+                
+                jtName.setText("");
+                jtApellido.setText("");
+                jtDNI.setText("");
+                JDFechaNacimiento.setDate(java.sql.Date.valueOf(LocalDate.now()));
             }
 
         } catch (Exception e) {

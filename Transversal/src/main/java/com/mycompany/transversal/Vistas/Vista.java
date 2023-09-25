@@ -32,6 +32,7 @@ public class Vista extends javax.swing.JFrame {
         jLayeredPane3.repaint();
 
         this.setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

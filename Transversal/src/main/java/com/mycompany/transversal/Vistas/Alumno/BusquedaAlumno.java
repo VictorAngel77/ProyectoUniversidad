@@ -35,6 +35,7 @@ public class BusquedaAlumno extends javax.swing.JPanel {
     public BusquedaAlumno() {
         initComponents();
         agregarCabecera();
+        ListaAlumnos();
     } //ESO ME ESTA PASANDO DESDE HOY , NO TERMINA DE CARGAR SI
 
     /**
@@ -137,6 +138,29 @@ public class BusquedaAlumno extends javax.swing.JPanel {
 
     private void JBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEliminarActionPerformed
         // TODO add your handling code here:
+        try {
+            int fila = JTabla.getSelectedRow();
+
+            if (fila >= 0) {
+                int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere dar de baja a este alumno?",
+                        "Confirmacion de Baja", JOptionPane.OK_CANCEL_OPTION);
+
+                if (respuesta == JOptionPane.OK_OPTION) {
+                    int idAlumno = (int) modelo.getValueAt(fila, 0);
+                    System.out.println("ID del alumno seleccionado: " + idAlumno);
+                    aluConn.eliminarAlumno(idAlumno);
+                    JOptionPane.showMessageDialog(this, "Eliminado Con EXITO!!!");
+                    borrarfilas();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecciono al alumno que desea eliminar");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al eliminar alumno :" + e);
+        }
+
+
     }//GEN-LAST:event_JBEliminarActionPerformed
 
     private void JTBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBuscarKeyReleased
@@ -159,6 +183,8 @@ public class BusquedaAlumno extends javax.swing.JPanel {
                 }
 
             }
+        }else{
+        ListaAlumnos();
         }
     }//GEN-LAST:event_JTBuscarKeyReleased
     private boolean esNumero() {
@@ -195,6 +221,25 @@ public class BusquedaAlumno extends javax.swing.JPanel {
 
         for (int i = f; i >= 0; i--) {
             modelo.removeRow(i);
+        }
+
+    }
+
+    private void ListaAlumnos() {
+        List<Alumno> listaAlumnos = aluConn.listarAlumnos();
+
+        if (listaAlumnos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay alumnos en el sistema");
+        } else {
+            listaAlumnos.forEach(alumno -> {
+                modelo.addRow(new Object[]{
+                    alumno.getIdAlumno(),
+                    alumno.getDni(),
+                    alumno.getNombre(),
+                    alumno.getApellido()
+                });
+            });
+
         }
 
     }

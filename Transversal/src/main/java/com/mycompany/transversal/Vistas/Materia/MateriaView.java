@@ -36,6 +36,7 @@ public class MateriaView extends javax.swing.JPanel {
     public MateriaView() {
         initComponents();
         agregarCabecera();
+        ListaMateria();
     }
 
     private void agregarCabecera() {
@@ -206,6 +207,7 @@ public class MateriaView extends javax.swing.JPanel {
         }
         borrarfilas();
         jtBuscar.setText("");
+        ListaMateria();
     }//GEN-LAST:event_JbBajaActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -232,7 +234,7 @@ public class MateriaView extends javax.swing.JPanel {
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
-  borrarfilas();
+        borrarfilas();
         List<Materia> materias = new ArrayList();
         if (!jtBuscar.getText().isEmpty() && esNumero()) {
             materias = matConn.buscarMateria(Integer.valueOf(jtBuscar.getText()));
@@ -260,6 +262,25 @@ public class MateriaView extends javax.swing.JPanel {
         jtBuscar.setText("");
         return false;
     }
+
+    private void ListaMateria() {
+        List<Materia> listaMateria = matConn.listarMateriasCompleta();
+
+        if (listaMateria.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay Materias en el sistema");
+        } else {
+            listaMateria.forEach(materia -> {
+                modelo.addRow(new Object[]{
+                    materia.getIdMateria(),
+                    materia.getNombre(),
+                    materia.getAño(),
+                });
+            });
+
+        }
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbBaja;

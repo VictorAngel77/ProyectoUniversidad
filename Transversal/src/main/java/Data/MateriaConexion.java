@@ -177,5 +177,30 @@ return false;
         }
         return false;
     }
-        
+     
+             
+          public List<Materia>listarMateriasCompleta() {
+        List<Materia> listaCompleta = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM materia WHERE estado = 1";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while  (rs.next()) {
+                    Materia materia = new Materia();
+                    materia.setIdMateria(rs.getInt("idMateria"));
+                    materia.setNombre(rs.getString("nombre"));
+                    materia.setAño(rs.getInt("año"));
+                    materia.setEstado(rs.getBoolean("estado"));
+                    listaCompleta.add(materia);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno " + ex.getMessage());
+        }
+        return listaCompleta;
+    }
+          
+          
+          
+          
 }

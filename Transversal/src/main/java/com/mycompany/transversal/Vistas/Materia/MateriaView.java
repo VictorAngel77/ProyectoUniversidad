@@ -240,6 +240,8 @@ public class MateriaView extends javax.swing.JPanel {
             materias = matConn.buscarMateria(Integer.valueOf(jtBuscar.getText()));
             if (materias.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "La ID ingresada no correspinde a ninguna materia");
+                jtBuscar.setText("");
+                ListaMateria();
             } else {
                 for (Materia materia : materias) {
                     modelo.addRow(new Object[]{
@@ -249,6 +251,8 @@ public class MateriaView extends javax.swing.JPanel {
                     });
                 }
             }
+         } else { //En el caso que se borre todo lo que se esta buscando teniendo una coincidencia
+            ListaMateria();
         }
      }//GEN-LAST:event_jtBuscarKeyReleased
 
@@ -273,8 +277,7 @@ public class MateriaView extends javax.swing.JPanel {
                 modelo.addRow(new Object[]{
                     materia.getIdMateria(),
                     materia.getNombre(),
-                    materia.getAño(),
-                });
+                    materia.getAño(),});
             });
 
         }

@@ -201,7 +201,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
             alumno.setIdAlumno(Integer.parseInt(
                             AlumnosCB.getSelectedItem().toString().split(" ")[0]));
             nota = Double.parseDouble(
-                    modelo.getValueAt(row, 2).toString());
+                    modelo.getValueAt(row, 3).toString());
 
             Inscripcion inscripcion = new Inscripcion(
                     alumno,

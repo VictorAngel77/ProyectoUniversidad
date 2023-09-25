@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.Period;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -75,6 +76,7 @@ public class AlumnoView extends javax.swing.JPanel {
             }
         });
 
+        resultado.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         resultado.setToolTipText("");
 
         jButton2.setText("Atras");
@@ -150,14 +152,14 @@ public class AlumnoView extends javax.swing.JPanel {
             String apellido = jtApellido.getText();
             int dni = Integer.parseInt(jtDNI.getText());
             LocalDate fechaNacimineto = JDFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            String dniText = jtDNI.getText();
             
             Period verificarEdad = Period.between(fechaNacimineto, LocalDate.now());
 
-            if (name.isEmpty() || apellido.isEmpty() || dniText.isEmpty()) {
-                resultado.setText("Todos los datos deben estar completados");
+            if (name.isEmpty() || apellido.isEmpty()) {
+                resultado.setText("Todos los datos deben estara \ncompletados");
                 resultado.setForeground(Color.red);
-            } 
+               
+            } else {
             if (verificarEdad.getYears()>= 17) {
                 Alumno alumno = new Alumno();
                 alumno.setNombre(name);
@@ -168,22 +170,25 @@ public class AlumnoView extends javax.swing.JPanel {
 
                 connAlumno.newAlumno(alumno);
 
-                resultado.setText("Alumno agregado a la base de datos");
+                resultado.setText("Alumno agregado");
                 resultado.setForeground(Color.GREEN);
+                resultado.setHorizontalAlignment(SwingConstants.CENTER);
                 
                 jtName.setText("");
                 jtApellido.setText("");
                 jtDNI.setText("");
                 JDFechaNacimiento.setDate(java.sql.Date.valueOf(fechaNacimineto));
             }else{
-                JOptionPane.showMessageDialog(null, "El alumno tiene que ser mayor a 17 años");
+                JOptionPane.showMessageDialog(null, "El alumno tiene que ser \nmayor a 17 años");
+            }
             }
 
-        } catch (Exception e) {
-            resultado.setText("Verifique la conexion a la base de datos");
+        }catch(NumberFormatException e) {
+            resultado.setText("Verifique los datos" );
             resultado.setForeground(Color.RED);
+            resultado.setHorizontalAlignment(SwingConstants.CENTER);
         }
-
+        
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

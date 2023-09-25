@@ -150,13 +150,18 @@ public class BusquedaAlumno extends javax.swing.JPanel {
                     aluConn.eliminarAlumno(idAlumno);
                     JOptionPane.showMessageDialog(this, "Eliminado Con EXITO!!!");
                     borrarfilas();
+                    ListaAlumnos();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Selecciono al alumno que desea eliminar");
+                borrarfilas();
+                ListaAlumnos();
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al eliminar alumno :" + e);
+            borrarfilas();
+            ListaAlumnos();
         }
 
 

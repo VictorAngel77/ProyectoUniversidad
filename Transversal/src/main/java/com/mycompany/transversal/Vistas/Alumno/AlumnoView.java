@@ -11,6 +11,7 @@ import Data.AlumnoConexion;
 import Data.Conexion;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.time.Period;
 import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 
@@ -150,11 +151,14 @@ public class AlumnoView extends javax.swing.JPanel {
             int dni = Integer.parseInt(jtDNI.getText());
             LocalDate fechaNacimineto = JDFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             String dniText = jtDNI.getText();
+            
+            Period verificarEdad = Period.between(fechaNacimineto, LocalDate.now());
 
             if (name.isEmpty() || apellido.isEmpty() || dniText.isEmpty()) {
                 resultado.setText("Todos los datos deben estar completados");
                 resultado.setForeground(Color.red);
-            } else {
+            } 
+            if (verificarEdad.getYears()>= 17) {
                 Alumno alumno = new Alumno();
                 alumno.setNombre(name);
                 alumno.setApellido(apellido);
@@ -170,7 +174,9 @@ public class AlumnoView extends javax.swing.JPanel {
                 jtName.setText("");
                 jtApellido.setText("");
                 jtDNI.setText("");
-                JDFechaNacimiento.setDate(java.sql.Date.valueOf(LocalDate.now()));
+                JDFechaNacimiento.setDate(java.sql.Date.valueOf(fechaNacimineto));
+            }else{
+                JOptionPane.showMessageDialog(null, "El alumno tiene que ser mayor a 17 años");
             }
 
         } catch (Exception e) {

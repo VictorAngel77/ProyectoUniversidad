@@ -70,6 +70,28 @@ public class MateriaConexion {
         }
         return materias;
     }
+    
+        public List<Materia> buscarMateriaBaja(int id) {
+        List<Materia> materias = new ArrayList();
+        String sql = "SELECT idMateria, nombre , año , estado FROM materia WHERE idMateria like ? AND estado = 0";
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + id + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Materia materia = new Materia();
+                materia.setIdMateria(rs.getInt("idMateria"));
+                materia.setNombre(rs.getString("nombre"));
+                materia.setAño(rs.getInt("año"));
+                materias.add(materia);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return materias;
+    }
 
     public Materia buscarMateriaByid(int id) {
         Materia materia = new Materia();
@@ -115,9 +137,6 @@ public class MateriaConexion {
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ps.setInt(1, id);
                 int fila = ps.executeUpdate();
-                if (fila == 1) {
-                    JOptionPane.showMessageDialog(null, " Se eliminó la Materia.");
-                }
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Matria");
@@ -178,7 +197,7 @@ public class MateriaConexion {
     public List<Materia> listarMateriasCompleta() {
         List<Materia> listaCompleta = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM materia WHERE estado = 1";
+            String sql = "SELECT * FROM materia where estado=1";
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
@@ -196,4 +215,36 @@ public class MateriaConexion {
         return listaCompleta;
     }
 
+     public void altaMateria(int id) {
+        try {
+            String sql = "UPDATE materia SET estado = 1 WHERE idMateria = ? ";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                int fila = ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Matria");
+        }
+    }
+    
+    public List<Materia> listarMateriasBaja() {
+        List<Materia> listaCompleta = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM materia where estado=0";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Materia materia = new Materia();
+                    materia.setIdMateria(rs.getInt("idMateria"));
+                    materia.setNombre(rs.getString("nombre"));
+                    materia.setAño(rs.getInt("año"));
+                    materia.setEstado(rs.getBoolean("estado"));
+                    listaCompleta.add(materia);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno " + ex.getMessage());
+        }
+        return listaCompleta;
+    }
 }

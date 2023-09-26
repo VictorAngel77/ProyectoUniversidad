@@ -53,7 +53,8 @@ public class VistaInscripciones extends javax.swing.JPanel {
         modeloAlumnos = new DefaultComboBoxModel<Alumno>();
         modeloAlumnos.addAll(
                 conexionAlumno.listarAlumnos().stream()
-                        .filter(estado -> estado.isActivo()).toList()
+                        .filter(Alumno::isActivo)
+                        .toList()
         );
         alumnosCB.setModel(modeloAlumnos);
 

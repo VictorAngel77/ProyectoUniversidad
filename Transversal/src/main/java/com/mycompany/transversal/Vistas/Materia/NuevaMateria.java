@@ -9,7 +9,6 @@ import com.mycompany.transversal.Entidades.Materia;
 import static com.mycompany.transversal.Vistas.Materia.ModificarView.matConn;
 import java.awt.Color;
 
-
 /**
  *
  * @author jdbar
@@ -23,6 +22,7 @@ public class NuevaMateria extends javax.swing.JPanel {
      */
     public NuevaMateria() {
         initComponents();
+        JLResultado.setHorizontalAlignment(JLResultado.CENTER);
     }
 
     /**
@@ -133,16 +133,18 @@ public class NuevaMateria extends javax.swing.JPanel {
                 if (existe) {
                     JLResultado.setText("Error! La materia ya existe");
                     JLResultado.setForeground(Color.RED);
+                    seteoCampos();
                 } else {
                     Materia nueva = new Materia(nombreMat, anio, true);
                     boolean exito = matConn.newMateria(nueva);
                     if (exito) {
                         JLResultado.setText("Se guardo correctamente la materia");
                         JLResultado.setForeground(Color.GREEN);
-
+                        seteoCampos();
                     } else {
                         JLResultado.setText("Error! al guardar materia");
                         JLResultado.setForeground(Color.red);
+                        seteoCampos();
                     }
                 }
             } else {
@@ -156,6 +158,10 @@ public class NuevaMateria extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jbGuardarActionPerformed
 
+    private void seteoCampos() {
+        jtNombre.setText("");
+        jsAnio.setValue(0);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLResultado;

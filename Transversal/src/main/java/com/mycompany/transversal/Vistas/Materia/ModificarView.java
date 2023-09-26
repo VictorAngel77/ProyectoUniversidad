@@ -9,7 +9,6 @@ import Data.MateriaConexion;
 import com.mycompany.transversal.Entidades.Materia;
 import java.awt.Color;
 
-
 /**
  *
  * @author jdbar
@@ -25,10 +24,12 @@ public class ModificarView extends javax.swing.JPanel {
         this.materiaModificar = mate;
         initComponents();
         seteoCampos();
+        jlRespuesta.setHorizontalAlignment(jlRespuesta.CENTER);
     }
 
     public ModificarView() {
         initComponents();
+        jlRespuesta.setHorizontalAlignment(jlRespuesta.CENTER);
     }
 
     private void seteoCampos() {

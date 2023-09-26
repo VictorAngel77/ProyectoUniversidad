@@ -27,7 +27,7 @@ public class AlumnoConexion {
     }
 
     
-    public void newAlumno(Alumno alumno) {
+    public boolean newAlumno(Alumno alumno) {
         try {
             String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?, ?, ?, ?, ?)";
 
@@ -41,13 +41,17 @@ public class AlumnoConexion {
                 ps.executeUpdate();
                 System.out.println("Guardado con exito");
                 ps.close();
+                
+                return true;
             } catch (SQLException ex) {
                 System.out.println("Error al acceder a la tabla Alumno" + ex.getMessage() + "\nSQLState: " + ex.getSQLState());
+                return false;
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoConexion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return false;
     }
 
     
@@ -80,7 +84,7 @@ public class AlumnoConexion {
     
     public List<Alumno> buscarAlumnoPorDni(int dni) {
         List<Alumno> listaAlumnos = new ArrayList<>();
-        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE dni LIKE ? AND estado = 1";
+        String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE dni LIKE ?";
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
@@ -107,7 +111,7 @@ public class AlumnoConexion {
     public List<Alumno> listarAlumnos() {
         List<Alumno> alumnos = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM alumno WHERE estado = 1 ";
+            String sql = "SELECT * FROM alumno";
             try (PreparedStatement ps = con.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
@@ -157,6 +161,21 @@ public class AlumnoConexion {
                 int fila = ps.executeUpdate();
                 if (fila == 1) {
                     System.out.println(" Se eliminó el alumno.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(" Error al acceder a la tabla Alumno");
+        }
+    }
+    
+        public void altaAlumno(int id) {
+        try {
+            String sql = "UPDATE alumno SET estado = 1 WHERE idAlumno = ? ";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                int fila = ps.executeUpdate();
+                if (fila == 1) {
+                    System.out.println(" Se dio de alta el alumno.");
                 }
             }
         } catch (SQLException e) {

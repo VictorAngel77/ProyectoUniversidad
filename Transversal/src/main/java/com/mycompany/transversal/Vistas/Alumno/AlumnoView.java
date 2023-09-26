@@ -167,12 +167,17 @@ public class AlumnoView extends javax.swing.JPanel {
                     alumno.setFechaNAc(fechaNacimineto);
                     alumno.setActivo(true);
 
-                    connAlumno.newAlumno(alumno);
+                    if (connAlumno.newAlumno(alumno)) {
 
-                    resultado.setText("Alumno agregado a la base de datos");
-                    resultado.setForeground(Color.GREEN);
-                    resultado.setHorizontalAlignment(resultado.CENTER);
+                        resultado.setText("Alumno agregado a la base de datos");
+                        resultado.setForeground(Color.GREEN);
+                        resultado.setHorizontalAlignment(resultado.CENTER);
+                    } else {
+                        resultado.setText("Alumno ya existente a la base de datos");
+                        resultado.setForeground(Color.RED);
+                        resultado.setHorizontalAlignment(resultado.CENTER);
 
+                    }
                     jtName.setText("");
                     jtApellido.setText("");
                     jtDNI.setText("");

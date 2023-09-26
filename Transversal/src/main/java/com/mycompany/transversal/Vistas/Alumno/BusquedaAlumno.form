@@ -34,6 +34,8 @@
                       <Group type="102" attributes="0">
                           <Component id="JBNuevo" min="-2" pref="128" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="JBAlta" min="-2" pref="108" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="JBEliminar" min="-2" pref="113" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -56,6 +58,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JBNuevo" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="JBEliminar" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
+                  <Component id="JBAlta" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="31" max="32767" attributes="0"/>
           </Group>
@@ -103,7 +106,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="JBEliminar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar"/>
+        <Property name="text" type="java.lang.String" value="Baja del Alumno"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBEliminarActionPerformed"/>
@@ -116,6 +119,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Buscar por DNI"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="JBAlta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alta del Alumno"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBAltaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -53,6 +53,7 @@ public class BusquedaAlumno extends javax.swing.JPanel {
         JBNuevo = new javax.swing.JButton();
         JBEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        JBAlta = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(700, 400));
 
@@ -88,7 +89,7 @@ public class BusquedaAlumno extends javax.swing.JPanel {
             }
         });
 
-        JBEliminar.setText("Eliminar");
+        JBEliminar.setText("Baja del Alumno");
         JBEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JBEliminarActionPerformed(evt);
@@ -97,6 +98,13 @@ public class BusquedaAlumno extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Buscar por DNI");
+
+        JBAlta.setText("Alta del Alumno");
+        JBAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBAltaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -114,6 +122,8 @@ public class BusquedaAlumno extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(JBNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(JBAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
                             .addComponent(JBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(71, Short.MAX_VALUE))
         );
@@ -129,7 +139,8 @@ public class BusquedaAlumno extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JBEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -149,33 +160,38 @@ public class BusquedaAlumno extends javax.swing.JPanel {
 
     private void JBEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBEliminarActionPerformed
         // TODO add your handling code here:
-        try {
-            int fila = JTabla.getSelectedRow();
+        int fila = JTabla.getSelectedRow();
 
-            if (fila >= 0) {
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere dar de baja a este alumno?",
-                        "Confirmacion de Baja", JOptionPane.OK_CANCEL_OPTION);
+        if (modelo.getValueAt(fila, 4).equals("Activo")) {
 
-                if (respuesta == JOptionPane.OK_OPTION) {
-                    int idAlumno = (int) modelo.getValueAt(fila, 0);
-                    aluConn.eliminarAlumno(idAlumno);
-                    JOptionPane.showMessageDialog(this, "Eliminado Con EXITO!!!");
+            try {
+
+                if (fila >= 0) {
+                    int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere dar de baja a este alumno?",
+                            "Confirmacion de Baja", JOptionPane.OK_CANCEL_OPTION);
+
+                    if (respuesta == JOptionPane.OK_OPTION) {
+                        int idAlumno = (int) modelo.getValueAt(fila, 0);
+                        aluConn.eliminarAlumno(idAlumno);
+                        JOptionPane.showMessageDialog(this, "Eliminado Con EXITO!!!");
+                        borrarfilas();
+                        ListaAlumnos();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecciono al alumno que desea eliminar");
                     borrarfilas();
                     ListaAlumnos();
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Selecciono al alumno que desea eliminar");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al eliminar alumno :" + e);
                 borrarfilas();
                 ListaAlumnos();
             }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar alumno :" + e);
-            borrarfilas();
-            ListaAlumnos();
+        } else {
+            System.out.println("Error no se pudo ejecutar");
         }
-
-
     }//GEN-LAST:event_JBEliminarActionPerformed
 
     private void JTBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBuscarKeyReleased
@@ -184,28 +200,64 @@ public class BusquedaAlumno extends javax.swing.JPanel {
         List<Alumno> alumnos = new ArrayList();
         if (!JTBuscar.getText().isEmpty() && esNumero()) {
             alumnos = aluConn.buscarAlumnoPorDni(Integer.valueOf(JTBuscar.getText()));
-
             if (alumnos.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "El DNI ingresado no corresponde a ningún alumno");
+                System.out.println("El DNI ingresado no corresponde a ningún alumno");
             } else {
                 for (Alumno alumno : alumnos) {
+                    String estado = alumno.isActivo() ? "Activo" : "NO Activo";
                     modelo.addRow(new Object[]{
                         alumno.getIdAlumno(),
                         alumno.getDni(),
                         alumno.getNombre(),
-                        alumno.getApellido()
+                        alumno.getApellido(),
+                        estado
+                            
                     });
                 }
-
             }
-        }else{
-        ListaAlumnos();
+        } else {
+            ListaAlumnos();
         }
     }//GEN-LAST:event_JTBuscarKeyReleased
 
     private void JTBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTBuscarActionPerformed
+
+    private void JBAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBAltaActionPerformed
+        // TODO add your handling code here:
+        int fila = JTabla.getSelectedRow();
+        if (modelo.getValueAt(fila, 4).equals("NO Activo")) {
+            try {
+
+                if (fila >= 0) {
+                    int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere dar de Alta a este alumno?",
+                            "Confirmacion de Alta", JOptionPane.OK_CANCEL_OPTION);
+
+                    if (respuesta == JOptionPane.OK_OPTION) {
+                        int idAlumno = (int) modelo.getValueAt(fila, 0);
+                        aluConn.altaAlumno(idAlumno);
+                        JOptionPane.showMessageDialog(this, "Se Cambio su estado con EXITO!!!");
+                        borrarfilas();
+                        ListaAlumnos();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecciono al alumno que desea dar de Alta");
+                    borrarfilas();
+                    ListaAlumnos();
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al dar de alta alumno :" + e);
+                borrarfilas();
+                ListaAlumnos();
+            }
+
+        } else {
+            System.out.println("Error no se pudo ejecutar");
+        }
+
+    }//GEN-LAST:event_JBAltaActionPerformed
     private boolean esNumero() {
         try {
             Integer.parseInt(JTBuscar.getText());
@@ -218,6 +270,7 @@ public class BusquedaAlumno extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JBAlta;
     private javax.swing.JButton JBEliminar;
     private javax.swing.JButton JBNuevo;
     private javax.swing.JTextField JTBuscar;
@@ -231,7 +284,7 @@ public class BusquedaAlumno extends javax.swing.JPanel {
         modelo.addColumn("DNI");
         modelo.addColumn("Nombre");
         modelo.addColumn("Apellido");
-
+        modelo.addColumn("Estado");
         JTabla.setModel(modelo);
 
     }
@@ -249,14 +302,16 @@ public class BusquedaAlumno extends javax.swing.JPanel {
         List<Alumno> listaAlumnos = aluConn.listarAlumnos();
 
         if (listaAlumnos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay alumnos en el sistema");
+            System.out.println("No hay alumnos en el sistema");
         } else {
             listaAlumnos.forEach(alumno -> {
+                String estado = alumno.isActivo() ? "Activo" : "NO Activo";
                 modelo.addRow(new Object[]{
                     alumno.getIdAlumno(),
                     alumno.getDni(),
                     alumno.getNombre(),
-                    alumno.getApellido()
+                    alumno.getApellido(),
+                    estado
                 });
             });
 

@@ -8,6 +8,7 @@ com\mycompany\transversal\Vistas\Materia\Inscripcion\VistaInscripciones.class
 com\mycompany\transversal\Vistas\Materia\ModificarView$1.class
 com\mycompany\transversal\Vistas\Materia\NuevaMateria$2.class
 com\mycompany\transversal\Vistas\Materia\MateriaView$4.class
+com\mycompany\transversal\Vistas\Alumno\BusquedaAlumno$6.class
 com\mycompany\transversal\Vistas\Alumno\AlumnoView.class
 com\mycompany\transversal\Vistas\Vista.class
 com\mycompany\transversal\Vistas\Materia\Inscripcion\VistaInscripciones$8.class

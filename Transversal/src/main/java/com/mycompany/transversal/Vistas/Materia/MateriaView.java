@@ -74,6 +74,7 @@ public class MateriaView extends javax.swing.JPanel {
         jtBuscar = new javax.swing.JTextField();
         jbNueva = new javax.swing.JButton();
         jbModificar = new javax.swing.JButton();
+        jcBaja = new javax.swing.JCheckBox();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 400));
 
@@ -112,6 +113,11 @@ public class MateriaView extends javax.swing.JPanel {
 
         jLabel1.setText("Codigo:");
 
+        jtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtBuscarActionPerformed(evt);
+            }
+        });
         jtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jtBuscarKeyReleased(evt);
@@ -132,12 +138,19 @@ public class MateriaView extends javax.swing.JPanel {
             }
         });
 
+        jcBaja.setText("Materia de Baja");
+        jcBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcBajaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 192, Short.MAX_VALUE)
+                .addGap(101, 113, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(JbBaja, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,9 +159,11 @@ public class MateriaView extends javax.swing.JPanel {
                         .addGap(31, 31, 31))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(32, 32, 32)
+                        .addGap(18, 18, 18)
                         .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(152, 152, 152))))
+                        .addGap(29, 29, 29)
+                        .addComponent(jcBaja)
+                        .addGap(100, 100, 100))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +181,8 @@ public class MateriaView extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jcBaja))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -196,21 +212,36 @@ public class MateriaView extends javax.swing.JPanel {
 
         int fila = jtListaMaterias.getSelectedRow();
         if (fila >= 0) {
-            int respuesta = JOptionPane.showConfirmDialog(null, "¿Esta seguro que quiere dar de baja a esta materia?",
-                    "Confirmacion de Baja", JOptionPane.OK_CANCEL_OPTION);
+            int respuesta;
+            if (jcBaja.isSelected()) {
+                respuesta = JOptionPane.showConfirmDialog(null,
+                        "¿Está seguro que quiere dar de alta a esta materia?",
+                        "Confirmación de Alta", JOptionPane.OK_CANCEL_OPTION);
+            } else {
+                respuesta = JOptionPane.showConfirmDialog(null,
+                        "¿Está seguro que quiere dar de baja a esta materia?",
+                        "Confirmación de Baja", JOptionPane.OK_CANCEL_OPTION);
+            }
+
             if (respuesta == JOptionPane.OK_OPTION) {
-                int idbaja = (int) modelo.getValueAt(fila, 0);
-                matConn.eliminarMateria(idbaja);
+                int id = (int) modelo.getValueAt(fila, 0);
+                if (jcBaja.isSelected()) {
+                    matConn.altaMateria(id);
+                } else {
+                    matConn.eliminarMateria(id);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar una Materia");
+            borrarfilas();
+            jtBuscar.setText("");
+            checkEstado();
         }
-        borrarfilas();
-        jtBuscar.setText("");
-        ListaMateria();
+
     }//GEN-LAST:event_JbBajaActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+
         int filaSelec = jtListaMaterias.getSelectedRow();
         if (filaSelec >= 0) {
             int id = (int) modelo.getValueAt(filaSelec, 0);
@@ -235,13 +266,21 @@ public class MateriaView extends javax.swing.JPanel {
 
     private void jtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtBuscarKeyReleased
         borrarfilas();
-        List<Materia> materias = new ArrayList();
+
         if (!jtBuscar.getText().isEmpty() && esNumero()) {
-            materias = matConn.buscarMateria(Integer.valueOf(jtBuscar.getText()));
+            List<Materia> materias = new ArrayList<>();
+
+            if (!jcBaja.isSelected()) {
+                materias = matConn.buscarMateria(Integer.valueOf(jtBuscar.getText()));
+            } else {
+                JbBaja.setText("Alta");
+                materias = matConn.buscarMateriaBaja(Integer.valueOf(jtBuscar.getText()));
+            }
+
             if (materias.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "La ID ingresada no correspinde a ninguna materia");
+                JOptionPane.showMessageDialog(null, "La ID ingresada no corresponde a ninguna materia");
                 jtBuscar.setText("");
-                ListaMateria();
+                checkEstado();
             } else {
                 for (Materia materia : materias) {
                     modelo.addRow(new Object[]{
@@ -251,10 +290,31 @@ public class MateriaView extends javax.swing.JPanel {
                     });
                 }
             }
-         } else { //En el caso que se borre todo lo que se esta buscando teniendo una coincidencia
+        } else {
+            jtBuscar.setText("");
+            checkEstado();
+        }
+
+     }//GEN-LAST:event_jtBuscarKeyReleased
+
+    private void jtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtBuscarActionPerformed
+
+    private void jcBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcBajaActionPerformed
+        borrarfilas();
+        checkEstado();
+    }//GEN-LAST:event_jcBajaActionPerformed
+
+    private void checkEstado() {
+        if (jcBaja.isSelected()) {
+            JbBaja.setText("Alta");
+            ListaMateriaBaja();
+        } else {
+            JbBaja.setText("Baja");
             ListaMateria();
         }
-     }//GEN-LAST:event_jtBuscarKeyReleased
+    }
 
     private boolean esNumero() {
         try {
@@ -262,6 +322,7 @@ public class MateriaView extends javax.swing.JPanel {
             return true;
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Error debe ingresar un numero");
+            checkEstado();
         }
         jtBuscar.setText("");
         return false;
@@ -284,6 +345,23 @@ public class MateriaView extends javax.swing.JPanel {
 
     }
 
+    private void ListaMateriaBaja() {
+        List<Materia> listaMateria = matConn.listarMateriasBaja();
+
+        if (listaMateria.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay Materias de Baja en el sistema");
+        } else {
+            listaMateria.forEach(materia -> {
+                modelo.addRow(new Object[]{
+                    materia.getIdMateria(),
+                    materia.getNombre(),
+                    materia.getAño(),});
+            });
+
+        }
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbBaja;
@@ -293,6 +371,7 @@ public class MateriaView extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton jbModificar;
     private javax.swing.JButton jbNueva;
+    private javax.swing.JCheckBox jcBaja;
     private javax.swing.JTextField jtBuscar;
     private javax.swing.JTable jtListaMaterias;
     // End of variables declaration//GEN-END:variables

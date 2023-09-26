@@ -57,7 +57,6 @@ public class VistaInscripciones extends javax.swing.JPanel {
                         .toList()
         );
         alumnosCB.setModel(modeloAlumnos);
-
     }
 
     public void configurarTablaInscripciones() {
@@ -312,12 +311,20 @@ public class VistaInscripciones extends javax.swing.JPanel {
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         // TODO add your handling code here:
-        int rowN = tablaInscripciones.getSelectedRow();
-        Integer id = Integer.valueOf(
-                tablaInscripciones.getValueAt(rowN, 0).toString()
-        );
-        conexionInscripcion.deleteInscripcion(id);
-        configurarTablaInscripciones();
+        Integer rowN, id = null;
+        try {
+            rowN = tablaInscripciones.getSelectedRow();
+            id = Integer.valueOf(
+                    tablaInscripciones.getValueAt(rowN, 0).toString()
+            );
+            if (id != null) {
+                conexionInscripcion.deleteInscripcion(id);
+                configurarTablaInscripciones();
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Seleccionaste un elemento en la tabla?");
+        }
     }//GEN-LAST:event_botonEliminarActionPerformed
 
     private void filtro_inscriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtro_inscriptoActionPerformed
@@ -350,24 +357,32 @@ public class VistaInscripciones extends javax.swing.JPanel {
 
     private void botonActualizarNotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarNotaActionPerformed
         // TODO add your handling code here:
-        int rowN = tablaInscripciones.getSelectedRow();
-        Integer id = Integer.valueOf(
-                tablaInscripciones.getValueAt(rowN, 0).toString()
-        );
-        System.out.println(id);
+        Integer id, rowN = null;
         double nota;
         try {
-            nota = Double.valueOf(
-                    tablaInscripciones.getValueAt(rowN, 3).toString()
-            );
-            System.out.println(id);
-            System.out.println(nota);
+            rowN = tablaInscripciones.getSelectedRow();
+            if (rowN != null) {
+
+                id = Integer.valueOf(
+                        tablaInscripciones.getValueAt(rowN, 0).toString()
+                );
+                try {
+                    nota = Double.valueOf(
+                            tablaInscripciones.getValueAt(rowN, 3).toString()
+                    );
+                } catch (Exception ex) {
+                    nota = 0.0;
+                }
+
+                if (nota >= 0.0 && nota <= 10.0) {
+                    conexionInscripcion.actualizarNota(id, nota);
+                }
+            }
         } catch (Exception ex) {
-            nota = 0.0;
+            System.out.println(ex.getMessage());
+            System.out.println("Seleccionaste un elemento en la tabla?");
         }
-        if (nota >= 0.0 && nota <= 10.0) {
-            conexionInscripcion.actualizarNota(id, nota);
-        }
+
         configurarTablaInscripciones();
     }//GEN-LAST:event_botonActualizarNotaActionPerformed
 

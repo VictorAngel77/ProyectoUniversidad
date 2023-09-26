@@ -42,7 +42,7 @@ public class AlumnoConexion {
                 System.out.println("Guardado con exito");
                 ps.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno" + ex.getMessage() + "\nSQLState: " + ex.getSQLState());
+                System.out.println("Error al acceder a la tabla Alumno" + ex.getMessage() + "\nSQLState: " + ex.getSQLState());
             }
 
         } catch (SQLException ex) {
@@ -68,11 +68,11 @@ public class AlumnoConexion {
                 alumno.setFechaNAc(rs.getDate("fechaNacimiento").toLocalDate());
                 alumno.setActivo(true);
             } else {
-                JOptionPane.showMessageDialog(null, "No existe el alumno");
+                System.out.println("No existe el alumno");
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
+            System.out.println("Error al acceder a la tabla Alumno " + ex.getMessage());
         }
         return alumno;
     }
@@ -99,7 +99,7 @@ public class AlumnoConexion {
             }
             ps.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
+            System.out.println("Error al acceder a la tabla Alumno " + ex.getMessage());
         }
         return listaAlumnos;
     }
@@ -122,7 +122,7 @@ public class AlumnoConexion {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno " + ex.getMessage());
+            System.out.println("Error al acceder a la tabla Alumno " + ex.getMessage());
         }
         return alumnos;
     }
@@ -140,12 +140,12 @@ public class AlumnoConexion {
             ps.setInt(5, alumno.getIdAlumno());
             int exito = ps.executeUpdate();
             if (exito == 1) {
-                JOptionPane.showMessageDialog(null, "Modificado Exitosamente.");
+                System.out.println("Modificado Exitosamente.");
             } else {
-                JOptionPane.showMessageDialog(null, "El alumno no existe");
+                System.out.println("El alumno no existe");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Alumno " + ex.getMessage());
+            System.out.println("Error al acceder a la tabla Alumno " + ex.getMessage());
         }
     }
 
@@ -156,11 +156,11 @@ public class AlumnoConexion {
                 ps.setInt(1, id);
                 int fila = ps.executeUpdate();
                 if (fila == 1) {
-                    JOptionPane.showMessageDialog(null, " Se eliminó el alumno.");
+                    System.out.println(" Se eliminó el alumno.");
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, " Error al acceder a la tabla Alumno");
+            System.out.println(" Error al acceder a la tabla Alumno");
         }
     }
 

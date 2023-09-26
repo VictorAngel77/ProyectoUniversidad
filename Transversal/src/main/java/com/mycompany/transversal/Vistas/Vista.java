@@ -177,6 +177,8 @@ public class Vista extends javax.swing.JFrame {
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         // TODO add your handling code here: 
+        vins.configurarComboAlumnos();
+        vins.selectAlumno();
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jTabbedPane1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTabbedPane1AncestorAdded

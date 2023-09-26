@@ -41,7 +41,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
             initComponents();
             configurarComboAlumnos();
 
-            alumnosCB.setSelectedIndex(0);
+            selectAlumno();
             configurarTablaInscripciones();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -111,6 +111,11 @@ public class VistaInscripciones extends javax.swing.JPanel {
         }
     }
 
+    public void selectAlumno() {
+        alumnosCB.setSelectedIndex(0);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,6 +135,12 @@ public class VistaInscripciones extends javax.swing.JPanel {
         filtro_inscripto = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
         botonActualizarNota = new javax.swing.JButton();
+
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         tablaInscripciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -277,7 +288,9 @@ public class VistaInscripciones extends javax.swing.JPanel {
             );
             materia.setIdMateria((int) tablaInscripciones.getValueAt(rowN, 0));
             try {
-                nota = (double) tablaInscripciones.getValueAt(rowN, 3);
+                nota = Double.valueOf(
+                        tablaInscripciones.getValueAt(rowN, 3).toString()
+                );
             } catch (Exception ex) {
                 nota = 0.0;
             }
@@ -355,9 +368,14 @@ public class VistaInscripciones extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaInscripcionesInputMethodTextChanged
 
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        configurarComboAlumnos();
+    }//GEN-LAST:event_formComponentShown
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> alumnosCB;
+    private static javax.swing.JComboBox<String> alumnosCB;
     private javax.swing.JButton botonActualizarNota;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonInscripbir;

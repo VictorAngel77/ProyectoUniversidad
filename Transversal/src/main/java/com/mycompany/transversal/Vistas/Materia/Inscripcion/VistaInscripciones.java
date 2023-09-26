@@ -52,7 +52,8 @@ public class VistaInscripciones extends javax.swing.JPanel {
     public void configurarComboAlumnos() {
         modeloAlumnos = new DefaultComboBoxModel<Alumno>();
         modeloAlumnos.addAll(
-                conexionAlumno.listarAlumnos()
+                conexionAlumno.listarAlumnos().stream()
+                        .filter(estado -> estado.isActivo()).toList()
         );
         alumnosCB.setModel(modeloAlumnos);
 
@@ -278,24 +279,29 @@ public class VistaInscripciones extends javax.swing.JPanel {
 
     private void botonInscripbirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInscripbirActionPerformed
         // TODO add your handling code here:
+        String nombreMateria;
+        double nota;
         try {
-            double nota;
             int rowN = tablaInscripciones.getSelectedRow();
-            Materia materia = new Materia(
-                    tablaInscripciones.getValueAt(rowN, 1).toString(),
-                    (int) tablaInscripciones.getValueAt(rowN, 2),
-                    true
-            );
-            materia.setIdMateria((int) tablaInscripciones.getValueAt(rowN, 0));
-            try {
-                nota = Double.valueOf(
-                        tablaInscripciones.getValueAt(rowN, 3).toString()
+            nombreMateria = tablaInscripciones.getValueAt(rowN, 1).toString();
+
+            if (nombreMateria != null) {
+                Materia materia = new Materia(
+                        tablaInscripciones.getValueAt(rowN, 1).toString(),
+                        (int) tablaInscripciones.getValueAt(rowN, 2),
+                        true
                 );
-            } catch (Exception ex) {
-                nota = 0.0;
+                materia.setIdMateria((int) tablaInscripciones.getValueAt(rowN, 0));
+                try {
+                    nota = Double.valueOf(
+                            tablaInscripciones.getValueAt(rowN, 3).toString()
+                    );
+                } catch (Exception ex) {
+                    nota = 0.0;
+                }
+                Inscripcion nueva = new Inscripcion(alumnoSeleccionado, materia, nota);
+                conexionInscripcion.saveInscripcion(nueva);
             }
-            Inscripcion nueva = new Inscripcion(alumnoSeleccionado, materia, nota);
-            conexionInscripcion.saveInscripcion(nueva);
             configurarTablaInscripciones();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

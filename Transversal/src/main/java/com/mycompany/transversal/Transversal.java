@@ -11,6 +11,6 @@ package com.mycompany.transversal;
 public class Transversal {
 
     public static void main(String[] args) {
-        System.out.println("tu vieja");
+
     }
 }

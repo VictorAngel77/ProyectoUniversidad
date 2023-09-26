@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import com.mycompany.transversal.Entidades.Alumno;
+
 /**
  *
  * @author Victor Angel
@@ -26,7 +27,6 @@ public class AlumnoConexion {
         System.out.println("Se conecto Alumno");
     }
 
-    
     public boolean newAlumno(Alumno alumno) {
         try {
             String sql = "INSERT INTO alumno (dni, apellido, nombre, fechaNacimiento, estado) VALUES (?, ?, ?, ?, ?)";
@@ -41,7 +41,7 @@ public class AlumnoConexion {
                 ps.executeUpdate();
                 System.out.println("Guardado con exito");
                 ps.close();
-                
+
                 return true;
             } catch (SQLException ex) {
                 System.out.println("Error al acceder a la tabla Alumno" + ex.getMessage() + "\nSQLState: " + ex.getSQLState());
@@ -54,8 +54,7 @@ public class AlumnoConexion {
         return false;
     }
 
-    
-    public Alumno buscarAlumno(int id)  {
+    public Alumno buscarAlumno(int id) {
         Alumno alumno = null;
         String sql = "SELECT dni, apellido, nombre, fechaNacimiento FROM alumno WHERE idAlumno = ? AND estado = 1";
         PreparedStatement ps = null;
@@ -81,7 +80,6 @@ public class AlumnoConexion {
         return alumno;
     }
 
-    
     public List<Alumno> buscarAlumnoPorDni(int dni) {
         List<Alumno> listaAlumnos = new ArrayList<>();
         String sql = "SELECT idAlumno, dni, apellido, nombre, fechaNacimiento FROM alumno WHERE dni LIKE ?";
@@ -92,7 +90,7 @@ public class AlumnoConexion {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Alumno alumno = new Alumno();
-                
+
                 alumno.setIdAlumno(rs.getInt("idAlumno"));
                 alumno.setDni(rs.getInt("dni"));
                 alumno.setApellido(rs.getString("apellido"));
@@ -131,7 +129,6 @@ public class AlumnoConexion {
         return alumnos;
     }
 
-    
     public void modificarAlumno(Alumno alumno) {
         String sql = "UPDATE alumno SET dni = ? , apellido = ?, nombre = ?, fechaNacimiento = ? WHERE idAlumno = ?";
         PreparedStatement ps = null;
@@ -167,8 +164,8 @@ public class AlumnoConexion {
             System.out.println(" Error al acceder a la tabla Alumno");
         }
     }
-    
-        public void altaAlumno(int id) {
+
+    public void altaAlumno(int id) {
         try {
             String sql = "UPDATE alumno SET estado = 1 WHERE idAlumno = ? ";
             try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -181,6 +178,29 @@ public class AlumnoConexion {
         } catch (SQLException e) {
             System.out.println(" Error al acceder a la tabla Alumno");
         }
+    }
+
+    public List<Alumno> listarAlumnosAlta() {
+        List<Alumno> alumnos = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM alumno WHERE estado = 1 ";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Alumno alumno = new Alumno();
+                    alumno.setIdAlumno(rs.getInt("idAlumno"));
+                    alumno.setDni(rs.getInt("dni"));
+                    alumno.setApellido(rs.getString("apellido"));
+                    alumno.setNombre(rs.getString("nombre"));
+                    alumno.setFechaNAc(rs.getDate("fechaNacimiento").toLocalDate());
+                    alumno.setActivo(rs.getBoolean("estado"));
+                    alumnos.add(alumno);
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error al acceder a la tabla Alumno " + ex.getMessage());
+        }
+        return alumnos;
     }
 
 }

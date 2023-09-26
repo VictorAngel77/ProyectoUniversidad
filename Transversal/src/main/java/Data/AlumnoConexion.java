@@ -84,7 +84,7 @@ public class AlumnoConexion {
         PreparedStatement ps = null;
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + dni + "%");
+            ps.setString(1, dni + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Alumno alumno = new Alumno();

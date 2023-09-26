@@ -151,37 +151,40 @@ public class AlumnoView extends javax.swing.JPanel {
             int dni = Integer.parseInt(jtDNI.getText());
             LocalDate fechaNacimineto = JDFechaNacimiento.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             String dniText = jtDNI.getText();
-            
+
             Period verificarEdad = Period.between(fechaNacimineto, LocalDate.now());
 
             if (name.isEmpty() || apellido.isEmpty() || dniText.isEmpty()) {
                 resultado.setText("Todos los datos deben estar completados");
                 resultado.setForeground(Color.red);
+                resultado.setHorizontalAlignment(resultado.CENTER);
             } else {
-            if (verificarEdad.getYears()>= 17) {
-                Alumno alumno = new Alumno();
-                alumno.setNombre(name);
-                alumno.setApellido(apellido);
-                alumno.setDni(dni);
-                alumno.setFechaNAc(fechaNacimineto);
-                alumno.setActivo(true);
+                if (verificarEdad.getYears() >= 17) {
+                    Alumno alumno = new Alumno();
+                    alumno.setNombre(name);
+                    alumno.setApellido(apellido);
+                    alumno.setDni(dni);
+                    alumno.setFechaNAc(fechaNacimineto);
+                    alumno.setActivo(true);
 
-                connAlumno.newAlumno(alumno);
+                    connAlumno.newAlumno(alumno);
 
-                resultado.setText("Alumno agregado a la base de datos");
-                resultado.setForeground(Color.GREEN);
-                
-                jtName.setText("");
-                jtApellido.setText("");
-                jtDNI.setText("");
-                JDFechaNacimiento.setDate(java.sql.Date.valueOf(fechaNacimineto));
-            }else{
-                JOptionPane.showMessageDialog(null, "El alumno tiene que ser mayor a 17 años");
-            }
+                    resultado.setText("Alumno agregado a la base de datos");
+                    resultado.setForeground(Color.GREEN);
+                    resultado.setHorizontalAlignment(resultado.CENTER);
+
+                    jtName.setText("");
+                    jtApellido.setText("");
+                    jtDNI.setText("");
+                    JDFechaNacimiento.setDate(java.sql.Date.valueOf(fechaNacimineto));
+                } else {
+                    JOptionPane.showMessageDialog(null, "El alumno tiene que ser mayor a 17 años");
+                }
             }
         } catch (Exception e) {
-            resultado.setText("Verifique la conexion a la base de datos");
+            resultado.setText("Verifique los datos");
             resultado.setForeground(Color.RED);
+            resultado.setHorizontalAlignment(resultado.CENTER);
         }
 
 
@@ -192,7 +195,7 @@ public class AlumnoView extends javax.swing.JPanel {
         BusquedaAlumno alumno = new BusquedaAlumno();
         alumno.setLocation(0, 0);
         alumno.setSize(700, 400);
-        
+
         removeAll();
         add(alumno);
         revalidate();

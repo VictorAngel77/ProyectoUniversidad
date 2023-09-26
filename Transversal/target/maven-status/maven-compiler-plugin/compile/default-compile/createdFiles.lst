@@ -24,6 +24,7 @@ com\mycompany\transversal\Vistas\Materia\Inscripcion\VistaInscripciones$2.class
 com\mycompany\transversal\Vistas\Vista$6.class
 com\mycompany\transversal\Entidades\Inscripcion.class
 com\mycompany\transversal\Vistas\Materia\NuevaMateria.class
+com\mycompany\transversal\Vistas\Alumno\BusquedaAlumno$5.class
 com\mycompany\transversal\Vistas\Materia\Inscripcion\VistaInscripciones$4.class
 com\mycompany\transversal\Entidades\Materia.class
 Data\Conexion.class

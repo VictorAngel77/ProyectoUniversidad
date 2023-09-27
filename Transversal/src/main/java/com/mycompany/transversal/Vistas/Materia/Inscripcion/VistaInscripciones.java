@@ -80,7 +80,7 @@ public class VistaInscripciones extends javax.swing.JPanel {
                         .fetchInscripcionesByIdAlumno(idAlumno)
                         .forEach(ins -> {
 
-                            if (!ins.toString().equals("null")) {
+                            if (!ins.toString().contains("null")) {
                                 modeloTabla.addRow(
                                         ins.toString().split(", ")
                                 );

@@ -237,7 +237,9 @@ public class MateriaView extends javax.swing.JPanel {
             jtBuscar.setText("");
             checkEstado();
         }
-
+        borrarfilas();
+        jtBuscar.setText("");
+        checkEstado();
     }//GEN-LAST:event_JbBajaActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed

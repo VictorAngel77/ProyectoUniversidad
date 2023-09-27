@@ -9,6 +9,8 @@ import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.mycompany.transversal.Vistas.Alumno.BusquedaAlumno;
 import com.mycompany.transversal.Vistas.Materia.Inscripcion.VistaInscripciones;
 import com.mycompany.transversal.Vistas.Materia.MateriaView;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 /**
@@ -23,16 +25,11 @@ public class Vista extends javax.swing.JFrame {
     public Vista() {
         initComponents();
         vins = new VistaInscripciones();
-        jLayeredPane3.removeAll();
-        
-        vins.setLocation(0, 0);
-        vins.setSize(700, 400);
-        
         jLayeredPane3.add(vins);
         jLayeredPane3.repaint();
 
         this.setLocationRelativeTo(null);
-        setResizable(false);
+        //setResizable(false);
     }
 
     /**
@@ -44,17 +41,17 @@ public class Vista extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        FlatMacDarkLaf.setup();
-        jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         VistaAlumnos = new javax.swing.JLayeredPane();
         jLayeredPane3 = new javax.swing.JLayeredPane();
         VistaMaterias = new javax.swing.JLayeredPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setMaximumSize(new java.awt.Dimension(700, 430));
-        jPanel1.setPreferredSize(new java.awt.Dimension(700, 430));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                formComponentResized(evt);
+            }
+        });
 
         jTabbedPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
@@ -92,7 +89,7 @@ public class Vista extends javax.swing.JFrame {
         );
         VistaAlumnosLayout.setVerticalGroup(
             VistaAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Alumnos", VistaAlumnos);
@@ -113,7 +110,7 @@ public class Vista extends javax.swing.JFrame {
         );
         jLayeredPane3Layout.setVerticalGroup(
             jLayeredPane3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Inscripciones", jLayeredPane3);
@@ -148,28 +145,21 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Materias", VistaMaterias);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, Short.MAX_VALUE)
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -220,7 +210,16 @@ public class Vista extends javax.swing.JFrame {
 
     private void jLayeredPane3ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLayeredPane3ComponentResized
         // TODO add your handling code here:
+                vins.setSize(
+                getWidth()-10,
+                getHeight()-65
+        );
     }//GEN-LAST:event_jLayeredPane3ComponentResized
+
+    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_formComponentResized
 
     /**
      * @param args the command line arguments
@@ -232,20 +231,9 @@ public class Vista extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Vista.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            UIManager.setLookAndFeel(new FlatMacDarkLaf());
+        } catch (UnsupportedLookAndFeelException ex) {
+            System.out.println(ex.getMessage());
         }
         //</editor-fold>
 
@@ -261,7 +249,6 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLayeredPane VistaAlumnos;
     private javax.swing.JLayeredPane VistaMaterias;
     private javax.swing.JLayeredPane jLayeredPane3;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

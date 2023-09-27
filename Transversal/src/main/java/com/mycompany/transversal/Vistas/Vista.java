@@ -212,7 +212,7 @@ public class Vista extends javax.swing.JFrame {
         // TODO add your handling code here:
                 vins.setSize(
                 getWidth()-10,
-                getHeight()-65
+                getHeight()-75
         );
     }//GEN-LAST:event_jLayeredPane3ComponentResized
 

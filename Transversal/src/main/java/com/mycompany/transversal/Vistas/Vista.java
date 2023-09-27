@@ -211,8 +211,7 @@ public class Vista extends javax.swing.JFrame {
     private void jLayeredPane3ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jLayeredPane3ComponentResized
         // TODO add your handling code here:
                 vins.setSize(
-                getWidth()-10,
-                getHeight()-75
+                jLayeredPane3.getSize()
         );
     }//GEN-LAST:event_jLayeredPane3ComponentResized
 
